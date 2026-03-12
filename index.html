@@ -8,11 +8,32 @@
 <body>
 
     <nav class="sidebar">
-        <h2 style="padding: 20px; color: var(--accent)">MC Speedruns</h2>
-        <div class="nav-item active" onclick="showPage('speedruns')">🏆 Speedruns</div>
-        <div class="nav-item" onclick="showPage('players')">👥 Players</div>
-        <div class="nav-item" onclick="showPage('staff')">🛠️ Staff</div>
-    </nav>
+    <div class="sidebar-header">
+        <span class="logo-icon">🟢</span> 
+        <h3>MC Speedruns</h3>
+    </div>
+
+    <ul class="nav-links">
+        <li class="active" onclick="showPage('speedruns')">
+            <span class="icon">🏆</span> Speedruns
+        </li>
+        <li onclick="showPage('players')">
+            <span class="icon">👥</span> Players
+        </li>
+        <li onclick="showPage('staff')">
+            <span class="icon">🛠️</span> Staff
+        </li>
+    </ul>
+
+    <div class="sidebar-footer">
+        <a href="https://discord.gg/..." class="nav-item">
+            <span class="icon">💬</span> Discord
+        </li>
+        <a href="#" class="nav-item">
+            <span class="icon">🧧</span> Patreonite
+        </li>
+    </div>
+</nav>
 
     <main class="main-content">
         <section id="speedruns">
