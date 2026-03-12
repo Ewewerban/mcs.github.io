@@ -1,6 +1,6 @@
 {
   "categoryName": "Any% NG",
-  "icon": "assets/icons/Grass_Block.png",
+  "icon": "https://minecraft.wiki/images/Grass_Block_JE7_BE4.png",
   "runs": [
     { "name": "Jakiś Typ", "time": "00:23.11", "platform": "Bedrock" },
     { "name": "Ewewerban", "time": "00:15.27", "platform": "Java" },
