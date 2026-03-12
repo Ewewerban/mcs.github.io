@@ -1,41 +1,68 @@
 :root {
-    --bg-dark: #0d1117;
-    --sidebar-bg: #161b22;
-    --accent: #7ca352; /* Twoja zieleń z rysunków */
-    --text-gray: #8b949e;
+    --bg: #0d1117;
+    --side: #161b22;
+    --accent: #7ca352; /* Twoja zieleń z rysunku */
+    --card: #21262d;
 }
 
 body {
     margin: 0;
+    font-family: 'Segoe UI', sans-serif;
     display: flex;
-    background-color: var(--bg-dark);
+    background: var(--bg);
     color: white;
-    font-family: sans-serif;
 }
 
+/* Sidebar z rysunku */
 .sidebar {
-    width: 220px;
+    width: 240px;
     height: 100vh;
-    background: var(--sidebar-bg);
+    background: var(--side);
     border-right: 1px solid #30363d;
     position: fixed;
 }
 
-.nav-links { list-style: none; padding: 20px; }
-
-.nav-links li {
-    padding: 12px;
-    margin-bottom: 10px;
+.nav-item {
+    padding: 15px 20px;
     cursor: pointer;
-    border-radius: 6px;
     transition: 0.2s;
 }
 
-.nav-links li.active { background: var(--accent); color: black; font-weight: bold; }
-.nav-links li:hover:not(.active) { background: #21262d; }
+.nav-item:hover { background: #21262d; }
+.nav-item.active { border-left: 4px solid var(--accent); color: var(--accent); }
 
-.content {
-    margin-left: 220px; /* Miejsce na sidebar */
+/* Kontener na treść */
+.main-content {
+    margin-left: 240px;
     padding: 40px;
     width: 100%;
 }
+
+/* Kafelki kategorii */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.cat-card {
+    background: var(--card);
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid #30363d;
+}
+
+/* Rankingi - Top 1, 2, 3 z rysunku */
+.rank-row {
+    background: var(--card);
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.top-1 { border-left: 6px solid #ffd700; } /* Złoto */
+.top-2 { border-left: 6px solid #c0c0c0; } /* Srebro */
+.top-3 { border-left: 6px solid #cd7f32; } /* Brąz */
