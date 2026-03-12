@@ -1,0 +1,41 @@
+:root {
+    --bg-dark: #0d1117;
+    --sidebar-bg: #161b22;
+    --accent: #7ca352; /* Twoja zieleń z rysunków */
+    --text-gray: #8b949e;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    background-color: var(--bg-dark);
+    color: white;
+    font-family: sans-serif;
+}
+
+.sidebar {
+    width: 220px;
+    height: 100vh;
+    background: var(--sidebar-bg);
+    border-right: 1px solid #30363d;
+    position: fixed;
+}
+
+.nav-links { list-style: none; padding: 20px; }
+
+.nav-links li {
+    padding: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+
+.nav-links li.active { background: var(--accent); color: black; font-weight: bold; }
+.nav-links li:hover:not(.active) { background: #21262d; }
+
+.content {
+    margin-left: 220px; /* Miejsce na sidebar */
+    padding: 40px;
+    width: 100%;
+}
