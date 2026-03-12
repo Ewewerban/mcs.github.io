@@ -21,12 +21,10 @@
         <div class="sidebar-footer">
             <button class="add-run-btn" onclick="openModal()">➕ Dodaj Speedrun</button>
             <a href="https://discord.gg/twojlink" target="_blank" class="nav-item">💬 Discord</a>
-            <a href="#" class="nav-item">🧧 Patreonite</a>
         </div>
     </nav>
 
     <main class="main-content">
-        
         <div id="categories-section" class="content-view">
             <h1>Wybierz kategorię</h1>
             <div class="category-grid">
@@ -43,39 +41,21 @@
         </div>
 
         <div id="ranking-view" class="content-view" style="display: none;"></div>
-
         <div id="players-section" class="content-view" style="display: none;">
             <h1>Lista graczy</h1>
             <div id="players-container"></div>
         </div>
-
         <div id="staff-section" class="content-view" style="display: none;">
             <h1>Staff Members</h1>
             <div id="staff-container"></div>
         </div>
-
     </main>
 
     <div id="addModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <h2 style="color: var(--accent-green);">Dodaj speedrun</h2>
-            <div class="modal-body">
-                <p>Aby dodać swój rekord do tabeli:</p>
-                <ol>
-                    <li>Wyślij maila na: <strong>ewewerban@gmail.com</strong></li>
-                    <li>W treści podaj:
-                        <ul>
-                            <li>Twój nick Minecraft</li>
-                            <li>Kategorię</li>
-                            <li>Czas (z dokładnością do ms)</li>
-                            <li>Link do nagrania (YouTube/Twitch)</li>
-                        </ul>
-                    </li>
-                    <li>Wybierz wersję: Java ☕ lub Bedrock 📱</li>
-                </ol>
-                <p style="font-size: 0.8rem; color: var(--text-dim);">Rekordy bez dowodu wideo nie będą akceptowane.</p>
-            </div>
+            <h2 style="color: #7ca352;">Dodaj speedrun</h2>
+            <p>Wyślij maila na: <strong>ewewerban@gmail.com</strong></p>
             <button class="close-btn-style" onclick="closeModal()">Zamknij</button>
         </div>
     </div>
