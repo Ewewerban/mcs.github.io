@@ -1,68 +1,96 @@
 :root {
-    --bg: #0d1117;
-    --side: #161b22;
-    --accent: #7ca352; /* Twoja zieleń z rysunku */
-    --card: #21262d;
+    --side-bg: #161b22;     /* Ciemne tło sidebaru */
+    --accent-green: #7ca352; /* Twoja zieleń z rysunków */
+    --text-main: #ffffff;
+    --text-dim: #8b949e;
+    --sidebar-width: 240px;
 }
 
+/* Podstawowy reset dla body */
 body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    display: flex;
-    background: var(--bg);
-    color: white;
+    padding-left: var(--sidebar-width); /* Robi miejsce na przypięty sidebar */
+    background-color: #0d1117;
+    font-family: sans-serif;
+    color: var(--text-main);
 }
 
-/* Sidebar z rysunku */
 .sidebar {
-    width: 240px;
+    width: var(--sidebar-width);
     height: 100vh;
-    background: var(--side);
+    background-color: var(--side-bg);
     border-right: 1px solid #30363d;
+    display: flex;
+    flex-direction: column;
     position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
 }
 
-.nav-item {
-    padding: 15px 20px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.nav-item:hover { background: #21262d; }
-.nav-item.active { border-left: 4px solid var(--accent); color: var(--accent); }
-
-/* Kontener na treść */
-.main-content {
-    margin-left: 240px;
-    padding: 40px;
-    width: 100%;
-}
-
-/* Kafelki kategorii */
-.category-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-}
-
-.cat-card {
-    background: var(--card);
-    padding: 20px;
-    border-radius: 12px;
-    text-align: center;
-    border: 1px solid #30363d;
-}
-
-/* Rankingi - Top 1, 2, 3 z rysunku */
-.rank-row {
-    background: var(--card);
-    margin-bottom: 10px;
-    padding: 15px;
-    border-radius: 8px;
+.sidebar-header {
+    padding: 25px 20px;
     display: flex;
     align-items: center;
+    gap: 10px;
+    color: var(--accent-green);
+    font-weight: bold;
+    font-size: 1.2rem;
 }
 
-.top-1 { border-left: 6px solid #ffd700; } /* Złoto */
-.top-2 { border-left: 6px solid #c0c0c0; } /* Srebro */
-.top-3 { border-left: 6px solid #cd7f32; } /* Brąz */
+.nav-links {
+    list-style: none;
+    padding: 0 10px;
+    margin: 0;
+    flex-grow: 1; /* Wypycha footer na dół */
+}
+
+/* Wspólny styl dla elementów listy i linków w footerze */
+.nav-links li, .nav-item {
+    padding: 12px 15px;
+    color: var(--text-dim);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    transition: 0.2s;
+    font-size: 0.95rem;
+}
+
+/* Efekt "Active" z Twojego rysunku */
+.nav-links li.active {
+    background-color: var(--accent-green);
+    color: #000 !important;
+    font-weight: bold;
+}
+
+/* Styl dla ikonek (emoji lub font-icons) */
+.icon {
+    font-size: 1.2rem;
+    width: 24px;
+    text-align: center;
+}
+
+.nav-links li:hover:not(.active), .nav-item:hover {
+    background-color: #21262d;
+    color: var(--text-main);
+}
+
+.sidebar-footer {
+    padding: 15px 10px;
+    border-top: 1px solid #30363d;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* Dodatek dla małych flag przy nickach z Twojego rysunku */
+.flag-mini {
+    width: 20px;
+    height: 14px;
+    border-radius: 2px;
+    object-fit: cover;
+}
