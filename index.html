@@ -2,26 +2,39 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MC Speedruns Dashboard</title>
-    <link rel="stylesheet" href="style.css"> </head>
+    <title>MCS Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 <body>
 
     <nav class="sidebar">
-        <div class="logo">🏆 MC Speedruns</div>
-        <ul class="nav-links">
-            <li class="active" onclick="changePage('home')">Speedruns</li>
-            <li onclick="changePage('players')">Players</li>
-            <li onclick="changePage('staff')">Staff</li>
-            <li><a href="https://discord.gg/twojlink" target="_blank">Discord</a></li>
-        </ul>
+        <h2 style="padding: 20px; color: var(--accent)">MC Speedruns</h2>
+        <div class="nav-item active" onclick="showPage('speedruns')">🏆 Speedruns</div>
+        <div class="nav-item" onclick="showPage('players')">👥 Players</div>
+        <div class="nav-item" onclick="showPage('staff')">🛠️ Staff</div>
     </nav>
 
-    <main class="content" id="main-display">
-        <h1>Wybierz kategorię</h1>
-        <div class="category-grid">
+    <main class="main-content">
+        <section id="speedruns">
+            <h1>Kategorie</h1>
+            <div class="category-grid">
+                <div class="cat-card">Any% NG</div>
+                <div class="cat-card">Golden Dandelion</div>
             </div>
+            
+            <h2 style="margin-top: 40px;">Best of Golden Dandelion</h2>
+            <div class="rank-row top-1">
+                <span style="width: 30px">1.</span>
+                <strong>Ewewerban</strong>
+                <span style="margin-left: auto">00:15.27</span>
+            </div>
+        </section>
+
+        <section id="staff" style="display: none;">
+            <h1>Staff Members</h1>
+            </section>
     </main>
 
-    <script src="script.js"></script> </body>
+    <script src="script.js"></script>
+</body>
 </html>
