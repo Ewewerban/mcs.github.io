@@ -1,28 +1,26 @@
 async function loadCategory(fileName) {
     try {
-        // 1. Pobieranie pliku z folderu data/
         const response = await fetch(`data/${fileName}.json`);
         const data = await response.json();
 
-        // 2. Automatyczne sortowanie po czasie (rosnąco)
+        // Sortowanie czasu
         const sortedRuns = data.runs.sort((a, b) => a.time.localeCompare(b.time));
 
-        // 3. Ukrywamy kafelki wyboru
+        // PRZEŁĄCZANIE WIDOKU
         document.getElementById('category-section').style.display = 'none';
-
-        // 4. Przygotowanie miejsca na ranking
         const display = document.getElementById('ranking-display');
+        display.style.display = 'block';
         
+        // Czyścimy poprzednią treść i budujemy nową
         let html = `
-            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 30px;">
-                <button onclick="location.reload()" style="background: none; border: 1px solid #555; color: white; cursor: pointer; padding: 5px 10px; border-radius: 5px;">← Powrót</button>
+            <div class="ranking-header">
+                <button class="back-btn" onclick="goBack()">← Powrót</button>
                 <h1>Best of ${data.categoryName}</h1>
-                <img src="${data.icon}" width="40">
+                <img src="${data.icon}" class="category-icon-large">
             </div>
             <div class="ranking-list">
         `;
 
-        // 5. Budowanie wierszy dla każdego gracza
         sortedRuns.forEach((run, index) => {
             const rank = index + 1;
             let rankClass = "";
@@ -32,10 +30,10 @@ async function loadCategory(fileName) {
 
             html += `
                 <div class="rank-row ${rankClass}">
-                    <span style="width: 25px; font-weight: bold;">${rank}.</span>
+                    <span class="rank-num">${rank}.</span>
                     <img src="https://mc-heads.net/avatar/${run.name}" class="p-head">
-                    <strong style="flex-grow: 1;">${run.name}</strong>
-                    <span title="${run.platform}">${run.platform === 'Java' ? '☕' : '📱'}</span>
+                    <strong class="p-name">${run.name}</strong>
+                    <span class="p-platform">${run.platform === 'Java' ? '☕' : '📱'}</span>
                     <span class="p-time">${run.time}</span>
                 </div>
             `;
@@ -45,7 +43,13 @@ async function loadCategory(fileName) {
         display.innerHTML = html;
 
     } catch (error) {
-        console.error("Błąd ładowania:", error);
-        alert("Nie znaleziono pliku: data/" + fileName + ".json");
+        console.error("Błąd:", error);
+        alert("Błąd ładowania kategorii. Sprawdź czy plik data/" + fileName + ".json istnieje.");
     }
+}
+
+// Funkcja powrotu do kafelków
+function goBack() {
+    document.getElementById('ranking-display').style.display = 'none';
+    document.getElementById('category-section').style.display = 'block';
 }
