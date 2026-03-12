@@ -1,96 +1,117 @@
 :root {
-    --side-bg: #161b22;     /* Ciemne tło sidebaru */
-    --accent-green: #7ca352; /* Twoja zieleń z rysunków */
+    --bg-dark: #0d1117;
+    --side-bg: #161b22;
+    --accent-green: #7ca352;
     --text-main: #ffffff;
     --text-dim: #8b949e;
-    --sidebar-width: 240px;
+    --card-bg: #21262d;
 }
 
-/* Podstawowy reset dla body */
 body {
     margin: 0;
-    padding-left: var(--sidebar-width); /* Robi miejsce na przypięty sidebar */
-    background-color: #0d1117;
-    font-family: sans-serif;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--bg-dark);
     color: var(--text-main);
+    display: flex;
 }
 
+/* SIDEBAR */
 .sidebar {
-    width: var(--sidebar-width);
+    width: 240px;
     height: 100vh;
-    background-color: var(--side-bg);
+    background: var(--side-bg);
     border-right: 1px solid #30363d;
+    position: fixed;
     display: flex;
     flex-direction: column;
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 1000;
 }
 
 .sidebar-header {
     padding: 25px 20px;
+    color: var(--accent-green);
+    font-weight: bold;
     display: flex;
     align-items: center;
     gap: 10px;
-    color: var(--accent-green);
-    font-weight: bold;
-    font-size: 1.2rem;
 }
 
 .nav-links {
     list-style: none;
     padding: 0 10px;
-    margin: 0;
-    flex-grow: 1; /* Wypycha footer na dół */
+    flex-grow: 1;
 }
 
-/* Wspólny styl dla elementów listy i linków w footerze */
 .nav-links li, .nav-item {
     padding: 12px 15px;
     color: var(--text-dim);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 12px;
     cursor: pointer;
     border-radius: 8px;
-    margin-bottom: 4px;
-    transition: 0.2s;
-    font-size: 0.95rem;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
 }
 
-/* Efekt "Active" z Twojego rysunku */
 .nav-links li.active {
-    background-color: var(--accent-green);
-    color: #000 !important;
+    background: var(--accent-green);
+    color: black;
     font-weight: bold;
 }
 
-/* Styl dla ikonek (emoji lub font-icons) */
-.icon {
-    font-size: 1.2rem;
-    width: 24px;
-    text-align: center;
-}
-
-.nav-links li:hover:not(.active), .nav-item:hover {
-    background-color: #21262d;
-    color: var(--text-main);
-}
-
 .sidebar-footer {
-    padding: 15px 10px;
+    padding: 20px 10px;
     border-top: 1px solid #30363d;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
 }
 
-/* Dodatek dla małych flag przy nickach z Twojego rysunku */
-.flag-mini {
-    width: 20px;
-    height: 14px;
-    border-radius: 2px;
-    object-fit: cover;
+/* CONTENT */
+.main-content {
+    margin-left: 240px;
+    padding: 40px;
+    width: 100%;
 }
+
+/* KAFELKI (DOMKI) */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.cat-card {
+    background: var(--card-bg);
+    border: 2px solid #30363d;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.cat-card:hover {
+    border-color: var(--accent-green);
+    transform: translateY(-5px);
+}
+
+.cat-card img {
+    width: 64px;
+    margin-bottom: 15px;
+}
+
+/* RANKINGI */
+.rank-row {
+    display: flex;
+    align-items: center;
+    background: var(--card-bg);
+    margin-bottom: 10px;
+    padding: 15px 20px;
+    border-radius: 10px;
+    gap: 15px;
+}
+
+.top-1 { border-left: 6px solid #ffd700; background: linear-gradient(90deg, #2c2600, #21262d); }
+.top-2 { border-left: 6px solid #c0c0c0; }
+.top-3 { border-left: 6px solid #cd7f32; }
+
+.p-head { width: 32px; border-radius: 4px; }
+.p-time { margin-left: auto; font-weight: bold; color: var(--accent-green); font-size: 1.1rem; }
