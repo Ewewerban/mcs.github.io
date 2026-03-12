@@ -115,3 +115,36 @@ body {
 
 .p-head { width: 32px; border-radius: 4px; }
 .p-time { margin-left: auto; font-weight: bold; color: var(--accent-green); font-size: 1.1rem; }
+.ranking-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.category-icon-large {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.back-btn {
+    background: var(--card-bg);
+    border: 1px solid #30363d;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.back-btn:hover {
+    background: #30363d;
+    border-color: var(--accent-green);
+}
+
+.rank-num {
+    width: 30px;
+    font-weight: bold;
+    color: var(--accent-green);
+}
