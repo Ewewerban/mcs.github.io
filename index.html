@@ -2,58 +2,44 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>MCS Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MC Speedruns Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <nav class="sidebar">
-    <div class="sidebar-header">
-        <span class="logo-icon">🟢</span> 
-        <h3>MC Speedruns</h3>
-    </div>
-
-    <ul class="nav-links">
-        <li class="active" onclick="showPage('speedruns')">
-            <span class="icon">🏆</span> Speedruns
-        </li>
-        <li onclick="showPage('players')">
-            <span class="icon">👥</span> Players
-        </li>
-        <li onclick="showPage('staff')">
-            <span class="icon">🛠️</span> Staff
-        </li>
-    </ul>
-
-    <div class="sidebar-footer">
-        <a href="https://discord.gg/..." class="nav-item">
-            <span class="icon">💬</span> Discord
-        </li>
-        <a href="#" class="nav-item">
-            <span class="icon">🧧</span> Patreonite
-        </li>
-    </div>
-</nav>
+        <div class="sidebar-header">
+            <span class="icon">🟢</span>
+            <span>MC Speedruns</span>
+        </div>
+        <ul class="nav-links">
+            <li class="active" onclick="location.reload()">🏆 Speedruns</li>
+            <li onclick="alert('Sekcja w budowie!')">👥 Players</li>
+            <li onclick="alert('Sekcja w budowie!')">🛠️ Staff</li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="#" class="nav-item">💬 Discord</a>
+            <a href="#" class="nav-item">🧧 Patreonite</a>
+        </div>
+    </nav>
 
     <main class="main-content">
-        <section id="speedruns">
-            <h1>Kategorie</h1>
+        <div id="category-section">
+            <h1>Wybierz kategorię</h1>
             <div class="category-grid">
-                <div class="cat-card">Any% NG</div>
-                <div class="cat-card">Golden Dandelion</div>
+                <div class="cat-card" onclick="loadCategory('any-ng')">
+                    <img src="https://minecraft.wiki/images/Grass_Block_JE7_BE4.png" alt="Any% NG">
+                    <span>Any% NG</span>
+                </div>
+                <div class="cat-card" onclick="loadCategory('golden-dandelion')">
+                    <img src="https://minecraft.wiki/images/Dandelion_JE4_BE3.png" alt="Golden Dandelion">
+                    <span>Golden Dandelion</span>
+                </div>
             </div>
-            
-            <h2 style="margin-top: 40px;">Best of Golden Dandelion</h2>
-            <div class="rank-row top-1">
-                <span style="width: 30px">1.</span>
-                <strong>Ewewerban</strong>
-                <span style="margin-left: auto">00:15.27</span>
-            </div>
-        </section>
+        </div>
 
-        <section id="staff" style="display: none;">
-            <h1>Staff Members</h1>
-            </section>
+        <div id="ranking-display"></div>
     </main>
 
     <script src="script.js"></script>
