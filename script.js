@@ -84,8 +84,8 @@ function goBack() {
 function loadStaff() {
     const staffData = [
         { name: "Ewewerban", role: "Owner, CEO", flag: "🇵🇱" },
-        { name: "2nec", role: "Helper", flag: "🇵🇱" },
-        { name: "kaktus_1", role: "Helper", flag: "🇵🇱" }
+        { name: "2rec", role: "Helper", flag: "🇵🇱" },
+        { name: "kaktus__1", role: "Helper", flag: "🇵🇱" }
     ];
 
     let html = "";
