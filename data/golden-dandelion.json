@@ -1,0 +1,21 @@
+{
+    "categoryName": "Golden Dandelion",
+    "icon": "https://minecraft.wiki/images/Dandelion_JE4_BE3.png",
+    "runs": [
+        {
+            "name": "Ewewerban",
+            "time": "00:15.27",
+            "platform": "Java"
+        },
+        {
+            "name": "Jakiś Typ",
+            "time": "00:23.11",
+            "platform": "Bedrock"
+        },
+        {
+            "name": "Lamman18",
+            "time": "00:41.37",
+            "platform": "Java"
+        }
+    ]
+}
