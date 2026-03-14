@@ -136,3 +136,71 @@ body {
 /* MODAL */
 .modal { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000; }
 .modal-content { background: var(--side-bg); padding: 30px; border-radius: 15px; text-align: center; border: 1px solid #30363d; }
+/* --- RESPONSYWNOŚĆ (WERSJA TELEFONOWA) --- */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column; /* Układ pionowy */
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: fixed;
+        bottom: 0; /* Sidebar ląduje na dole jako menu */
+        left: 0;
+        border-right: none;
+        border-top: 1px solid #30363d;
+        padding: 10px;
+        flex-direction: row;
+        justify-content: space-around;
+        z-index: 1000;
+    }
+
+    .sidebar-header, .sidebar-footer {
+        display: none; /* Chowamy nagłówek i stopkę na telefonie dla miejsca */
+    }
+
+    .nav-links {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+        margin: 0;
+    }
+
+    .nav-links li {
+        margin-bottom: 0;
+        padding: 10px;
+        font-size: 0.9rem;
+        text-align: center;
+    }
+
+    .main-content {
+        margin-left: 0; /* Usuwamy margines boczny */
+        margin-bottom: 70px; /* Miejsce na dolne menu */
+        padding: 20px;
+    }
+
+    .category-grid {
+        grid-template-columns: 1fr; /* Kafelki jeden pod drugim */
+    }
+
+    .cat-card {
+        padding: 40px 20px;
+    }
+
+    /* Rankingi na telefonie */
+    .rank-row {
+        padding: 12px 15px;
+        font-size: 0.9rem;
+        gap: 10px;
+    }
+
+    .p-head {
+        width: 24px;
+        height: 24px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+}
