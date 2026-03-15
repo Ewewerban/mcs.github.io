@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MC Speedruns Leaderboard</title>
+    <title>MC Speedruns</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -23,15 +23,19 @@
         <div id="categories-section" class="content-view">
             <h1>Select Category</h1>
             <div class="category-grid">
-                <div class="cat-card" onclick="loadCategory('any-ng')"><span>Any% NG</span></div>
-                <div class="cat-card" onclick="loadCategory('golden-dandelion')"><span>Golden Dandelion</span></div>
+                <div class="cat-card" onclick="loadCategory('any-ng')">
+                    <span>Any% NG</span>
+                </div>
+                <div class="cat-card" onclick="loadCategory('golden-dandelion')">
+                    <span>Golden Dandelion</span>
+                </div>
             </div>
         </div>
 
         <div id="discord-section" class="content-view" style="display: none;">
             <h1>Join Our Community</h1>
-            <div style="display: flex; justify-content: center; margin-top: 30px;">
-                <iframe src="https://discord.com/widget?id=TWÓJ_ID_SERWERA&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+            <div style="display: flex; justify-content: center; margin-top: 30px; background: #23272a; padding: 20px; border-radius: 15px;">
+                <iframe src="https://discord.com/widget?id=1331252187654160476&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
             </div>
         </div>
 
@@ -42,8 +46,9 @@
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <h2 style="color: #7ca352;">Submit Your Run</h2>
-            <p>Send your proof to: <strong>ewewerban@gmail.com</strong></p>
-            <button onclick="closeModal()" class="action-btn">Close</button>
+            <p>To add your record, send proof to:</p>
+            <p><strong>ewewerban@gmail.com</strong></p>
+            <button onclick="closeModal()" class="action-btn" style="margin-top: 20px;">Close</button>
         </div>
     </div>
 
