@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MC Speedruns</title>
-    <script src="https://unpkg.com/skinview3d@3.0.0-alpha.1/dist/bundle.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MC Speedruns Leaderboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,47 +11,37 @@
     <nav class="sidebar">
         <div class="sidebar-header">🏆 MC Speedruns</div>
         <ul class="nav-links">
-            <li id="nav-categories" class="active" onclick="showSection('categories')">🏆 Speedruns</li>
-            <li id="nav-players" onclick="showSection('players')">👥 Players</li>
-            <li id="nav-editor" onclick="showSection('editor')">👤 Skin Viewer 3D</li>
-            <li id="nav-staff" onclick="showSection('staff')">🛠️ Staff</li>
+            <li id="nav-categories" class="active" onclick="showSection('categories')">🏆 Leaderboards</li>
         </ul>
         <div class="sidebar-footer">
-            <button class="add-run-btn" onclick="openModal()">+ Dodaj Speedrun</button>
+            <button class="add-run-btn" onclick="openModal()">+ Submit Run</button>
         </div>
     </nav>
 
     <main class="main-content">
         <div id="categories-section" class="content-view">
-             <h1>Wybierz kategorię</h1>
-             <div class="category-grid">
-                <div class="cat-card" onclick="loadCategory('any-ng')"><span>Any% NG</span></div>
-                <div class="cat-card" onclick="loadCategory('golden-dandelion')"><span>Golden Dandelion</span></div>
+            <h1>Select Category</h1>
+            <div class="category-grid">
+                <div class="cat-card" onclick="loadCategory('any-ng')">
+                    <span>Any% NG</span>
+                </div>
+                <div class="cat-card" onclick="loadCategory('golden-dandelion')">
+                    <span>Golden Dandelion</span>
+                </div>
             </div>
-        </div>
-        <div id="ranking-view" class="content-view" style="display: none;"></div>
-        <div id="players-section" class="content-view" style="display: none;">
-            <h1>Gracze</h1>
-            <div id="players-container" class="players-grid"></div>
-        </div>
-        <div id="staff-section" class="content-view" style="display: none;">
-            <h1>Staff</h1>
-            <div id="staff-container"></div>
         </div>
 
-        <div id="editor-section" class="content-view" style="display: none;">
-            <h1>Skin Viewer 3D</h1>
-            <div class="viewer-wrapper">
-                <div style="background: #000; padding: 10px; border-radius: 15px; border: 2px solid #30363d;">
-                    <canvas id="skin_container"></canvas>
-                </div>
-                <div style="margin-top: 20px; display: flex; gap: 10px;">
-                    <input type="text" id="skinNickname" placeholder="Nick gracza..." class="modern-input" style="width: 200px;">
-                    <button id="showSkinBtn" onclick="updateViewerSkin()" class="action-btn">Pokaż Skin 3D</button>
-                </div>
-            </div>
-        </div>
+        <div id="ranking-view" class="content-view" style="display: none;"></div>
     </main>
+
+    <div id="addModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 style="color: #7ca352;">Submit Your Run</h2>
+            <p>Send your proof to: <strong>ewewerban@gmail.com</strong></p>
+            <button onclick="closeModal()" class="action-btn">Close</button>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
