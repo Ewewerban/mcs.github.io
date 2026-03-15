@@ -3,28 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MC Speedruns Dashboard</title>
+    <title>MC Speedruns</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://bsiatkowski.github.io/skinview3d/dist/skinview3d.bundle.js"></script>
 </head>
 <body>
 
     <nav class="sidebar">
-        <div class="sidebar-header"><span>🏆 MC Speedruns</span></div>
+        <div class="sidebar-header">🏆 MC Speedruns</div>
         <ul class="nav-links">
             <li id="nav-categories" class="active" onclick="showSection('categories')">🏆 Speedruns</li>
             <li id="nav-players" onclick="showSection('players')">👥 Players</li>
-            <li id="nav-editor" onclick="showSection('editor')">🎨 Skin Editor</li>
+            <li id="nav-editor" onclick="showSection('editor')">🖌️ Skin Editor</li>
             <li id="nav-staff" onclick="showSection('staff')">🛠️ Staff</li>
         </ul>
         <div class="sidebar-footer">
-            <button class="add-run-btn" onclick="openModal()">+ Dodaj Speedrun</button>
+            <button class="add-run-btn" onclick="openModal()">+ Add Speedrun</button>
         </div>
     </nav>
 
     <main class="main-content">
         <div id="categories-section" class="content-view">
-            <h1>Wybierz kategorię</h1>
+            <h1>Select category</h1>
             <div class="category-grid">
                 <div class="cat-card" onclick="loadCategory('any-ng')"><span>Any% NG</span></div>
                 <div class="cat-card" onclick="loadCategory('golden-dandelion')"><span>Golden Dandelion</span></div>
@@ -34,32 +33,15 @@
         <div id="ranking-view" class="content-view" style="display: none;"></div>
 
         <div id="players-section" class="content-view" style="display: none;">
-            <h1>Wyszukiwarka graczy</h1>
-            <input type="text" id="playerSearch" placeholder="Szukaj gracza..." onkeyup="filterPlayers()" class="modern-input">
+            <h1>Player Searcher</h1>
+            <input type="text" id="playerSearch" placeholder="Wpisz nick..." onkeyup="filterPlayers()" class="modern-input">
             <div id="players-container" class="players-grid"></div>
         </div>
 
         <div id="editor-section" class="content-view" style="display: none;">
             <h1>Skin Workshop</h1>
-            <div class="editor-layout">
-                <div class="preview-box">
-                    <canvas id="skin-container"></canvas>
-                    <div class="controls-overlay">
-                        <input type="text" id="skinNickname" placeholder="Nick gracza...">
-                        <button onclick="changeSkin()">Pokaż Skin</button>
-                    </div>
-                </div>
-                
-                <div class="tool-box">
-                    <h3>Tryb Edycji</h3>
-                    <p>Podgląd 3D pozwala sprawdzić detale. Aby przejść do malowania pikseli, użyj przycisku poniżej:</p>
-                    <a href="https://minecraft.novaskin.me/" target="_blank" class="full-editor-btn">Otwórz Zaawansowany Edytor 🖌️</a>
-                    <ul class="instrukcja">
-                        <li>✅ Obracaj myszką, aby widzieć plecy</li>
-                        <li>✅ Sprawdź jak skin wygląda w ruchu</li>
-                        <li>✅ Użyj scrolla, aby przybliżyć</li>
-                    </ul>
-                </div>
+            <div class="editor-frame-container">
+                <iframe src="https://minecraft.novaskin.me/resourcepacks#google_vignette" class="skin-iframe"></iframe>
             </div>
         </div>
 
@@ -72,8 +54,8 @@
     <div id="addModal" class="modal" style="display:none;">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <h2>Dodaj rekord</h2>
-            <p>Wyślij dowód na: <strong>ewewerban@gmail.com</strong></p>
+            <h2>Add record</h2>
+            <p>send proof to: <strong>ewewerban@gmail.com</strong></p>
         </div>
     </div>
 
