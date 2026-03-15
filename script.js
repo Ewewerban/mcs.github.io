@@ -1,103 +1,50 @@
-const playersDatabase = [
-    { name: "Ewewerban", runs: 5, rank: "Owner" },
-    { name: "Marlowww", runs: 12, rank: "Pro" },
-    { name: "2nec", runs: 8, rank: "Helper" },
-    { name: "kaktus_1", runs: 3, rank: "Helper" }
-];
-
-function showSection(sectionId) {
-    document.querySelectorAll('.content-view').forEach(view => view.style.display = 'none');
-    document.getElementById('ranking-view').style.display = 'none';
-    
-    document.getElementById(sectionId + '-section').style.display = 'block';
-
-    document.querySelectorAll('.nav-links li').forEach(li => li.classList.remove('active'));
-    document.getElementById('nav-' + sectionId).classList.add('active');
-
-    if (sectionId === 'editor') initPixelEditor();
-    if (sectionId === 'players') renderPlayers(playersDatabase);
-    if (sectionId === 'staff') loadStaff();
-}
-
-// LOGIKA MALOWANIA
-function initPixelEditor() {
-    const grid = document.getElementById('pixel-grid');
-    if (grid.children.length > 0) return;
-
-    for (let i = 0; i < 1024; i++) {
-        const pixel = document.createElement('div');
-        pixel.classList.add('pixel');
-        
-        pixel.addEventListener('mousedown', () => {
-            pixel.style.backgroundColor = document.getElementById('colorPicker').value;
-        });
-
-        pixel.addEventListener('mouseover', (e) => {
-            if (e.buttons === 1) {
-                pixel.style.backgroundColor = document.getElementById('colorPicker').value;
-            }
-        });
-
-        grid.appendChild(pixel);
-    }
-}
-
-function clearCanvas() {
-    document.querySelectorAll('.pixel').forEach(p => p.style.backgroundColor = 'transparent');
-}
-
-// RANKINGI
 async function loadCategory(fileName) {
     try {
         const response = await fetch(`data/${fileName}.json`);
         const data = await response.json();
+        
         const rankingView = document.getElementById('ranking-view');
         document.getElementById('categories-section').style.display = 'none';
         rankingView.style.display = 'block';
 
-        let html = `<button onclick="goBack()" style="padding:10px; cursor:pointer;">← Powrót</button><h1>${data.categoryName}</h1>`;
-        data.runs.sort((a,b) => a.time.localeCompare(b.time)).forEach((run, i) => {
-            html += `<div style="display:flex; padding:15px; background:#1c2128; margin-bottom:5px; border-radius:8px;">
-                        <span style="width:30px;">${i+1}.</span>
-                        <strong style="flex-grow:1;">${run.name}</strong>
-                        <span style="color:#58a6ff;">${run.time}</span>
-                     </div>`;
+        // Sortowanie rekordów
+        const sortedRuns = data.runs.sort((a, b) => a.time.localeCompare(b.time));
+
+        let html = `
+            <button onclick="goBack()" class="back-btn" style="margin-bottom:20px; padding:8px 15px; cursor:pointer; background:#30363d; color:white; border:none; border-radius:5px;">← Powrót</button>
+            <h1 style="margin-bottom:30px;">${data.categoryName}</h1>
+            <div class="ranking-list">
+        `;
+
+        sortedRuns.forEach((run, index) => {
+            const rank = index + 1;
+            
+            // Kolory dla TOP 3
+            let rankStyle = "";
+            let medal = "";
+            if (rank === 1) { rankStyle = "border-left: 4px solid #ffd700; background: rgba(255, 215, 0, 0.05);"; medal = "🥇 "; }
+            if (rank === 2) { rankStyle = "border-left: 4px solid #c0c0c0; background: rgba(192, 192, 192, 0.05);"; medal = "🥈 "; }
+            if (rank === 3) { rankStyle = "border-left: 4px solid #cd7f32; background: rgba(205, 127, 50, 0.05);"; medal = "🥉 "; }
+
+            html += `
+                <div class="rank-row" style="display:flex; align-items:center; background:#1c2128; padding:15px; margin-bottom:8px; border-radius:8px; ${rankStyle}">
+                    <span style="width:40px; font-weight:bold; color:#8b949e;">${medal}${rank}.</span>
+                    
+                    <img src="https://mc-heads.net/avatar/${run.name}/32" 
+                         style="width:32px; height:32px; border-radius:4px; margin-right:15px; image-rendering: pixelated;" 
+                         alt="${run.name}">
+                    
+                    <strong style="flex-grow:1; font-size:1.1rem;">${run.name}</strong>
+                    
+                    <span style="margin-right:20px; opacity:0.7;">${run.platform === 'Java' ? '☕' : '📱'}</span>
+                    
+                    <span style="color:#58a6ff; font-family:monospace; font-weight:bold; font-size:1.1rem;">${run.time}</span>
+                </div>`;
         });
-        rankingView.innerHTML = html;
-    } catch (e) { console.error(e); }
-}
 
-function goBack() {
-    document.getElementById('ranking-view').style.display = 'none';
-    document.getElementById('categories-section').style.display = 'block';
+        rankingView.innerHTML = html + "</div>";
+    } catch (e) { 
+        console.error("Błąd ładowania:", e); 
+        alert("Nie udało się załadować rankingu. Sprawdź czy plik JSON jest w folderze data.");
+    }
 }
-
-// PLAYERS
-function renderPlayers(players) {
-    const container = document.getElementById('players-container');
-    container.innerHTML = players.map(p => `
-        <div class="player-card" style="background:#21262d; padding:15px; border-radius:10px; text-align:center; border:1px solid #30363d;">
-            <img src="https://mc-heads.net/avatar/${p.name}" style="width:48px;">
-            <p><strong>${p.name}</strong></p>
-            <small style="color:#7ca352;">${p.rank}</small>
-        </div>
-    `).join('');
-}
-
-function filterPlayers() {
-    const val = document.getElementById('playerSearch').value.toLowerCase();
-    renderPlayers(playersDatabase.filter(p => p.name.toLowerCase().includes(val)));
-}
-
-function loadStaff() {
-    const staff = [{name: "Ewewerban", role: "Owner"}, {name: "2nec", role: "Helper"}];
-    document.getElementById('staff-container').innerHTML = staff.map(s => `
-        <div style="padding:15px; background:#1c2128; margin-bottom:10px; border-radius:10px; display:flex; align-items:center;">
-            <img src="https://mc-heads.net/avatar/${s.name}" style="width:32px; margin-right:15px;">
-            <strong>${s.name}</strong> - ${s.role}
-        </div>
-    `).join('');
-}
-
-function openModal() { document.getElementById('addModal').style.display = "flex"; }
-function closeModal() { document.getElementById('addModal').style.display = "none"; }
