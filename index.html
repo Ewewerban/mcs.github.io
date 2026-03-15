@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MC Speedruns Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://bsiatkowski.github.io/skinview3d/dist/skinview3d.bundle.js"></script>
 </head>
 <body>
 
@@ -13,8 +14,9 @@
             <span>🏆 MC Speedruns</span>
         </div>
         <ul class="nav-links">
-            <li id="nav-speedruns" class="active" onclick="showSection('categories')">🏆 Speedruns</li>
+            <li id="nav-categories" class="active" onclick="showSection('categories')">🏆 Speedruns</li>
             <li id="nav-players" onclick="showSection('players')">👥 Players</li>
+            <li id="nav-editor" onclick="showSection('editor')">🎨 Skin Editor</li>
             <li id="nav-staff" onclick="showSection('staff')">🛠️ Staff</li>
         </ul>
         <div class="sidebar-footer">
@@ -38,23 +40,46 @@
 
         <div id="ranking-view" class="content-view" style="display: none;"></div>
 
+        <div id="players-section" class="content-view" style="display: none;">
+            <h1>Wyszukiwarka graczy</h1>
+            <div class="search-container" style="margin-bottom: 20px;">
+                <input type="text" id="playerSearch" placeholder="Wpisz nick..." onkeyup="filterPlayers()" 
+                       style="width: 100%; max-width: 400px; padding: 12px; border-radius: 8px; border: 1px solid #30363d; background: #161b22; color: white;">
+            </div>
+            <div id="players-container" class="players-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px;"></div>
+        </div>
+
+        <div id="editor-section" class="content-view" style="display: none;">
+            <h1>Skin Previewer 3D</h1>
+            <div class="editor-layout" style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <canvas id="skin-container" style="background: #161b22; border-radius: 12px; border: 1px solid #30363d;"></canvas>
+                
+                <div class="editor-sidebar" style="flex: 1; min-width: 250px; background: #161b22; padding: 20px; border-radius: 12px;">
+                    <label>Podgląd gracza:</label>
+                    <input type="text" id="skinNickname" placeholder="Wpisz nick..." 
+                           style="width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: none; background: #21262d; color: white;">
+                    <button onclick="changeSkin()" style="width: 100%; padding: 12px; background: #7ca352; color: black; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Zastosuj Skin</button>
+                    
+                    <div style="margin-top: 20px; color: #8b949e; font-size: 0.9rem;">
+                        <p>🖱️ Lewy przycisk: Obracanie</p>
+                        <p>🖱️ Prawy przycisk: Przesuwanie</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="staff-section" class="content-view" style="display: none;">
             <h1>Staff Members</h1>
             <div id="staff-container"></div>
-        </div>
-        
-        <div id="players-section" class="content-view" style="display: none;">
-            <h1>Lista graczy</h1>
-            <div id="players-container"></div>
         </div>
     </main>
 
     <div id="addModal" class="modal" style="display:none;">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
+            <span class="close" onclick="closeModal()" style="cursor:pointer; float:right;">&times;</span>
             <h2 style="color: #7ca352;">Dodaj speedrun</h2>
-            <p>Wyślij maila na: <strong>ewewerban@gmail.com</strong></p>
-            <button class="close-btn-style" onclick="closeModal()">Zamknij</button>
+            <p>Wyślij dowód (link) na: <strong>ewewerban@gmail.com</strong></p>
+            <button onclick="closeModal()" style="padding: 10px 20px; cursor: pointer;">Zamknij</button>
         </div>
     </div>
 
