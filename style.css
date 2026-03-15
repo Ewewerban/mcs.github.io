@@ -24,6 +24,21 @@ body {
     padding: 20px;
     border-right: 1px solid #30363d;
 }
+/* Podium highlights */
+.rank-row:nth-child(2) { /* TOP 1 - Gold */
+    border-left: 4px solid #ffd700 !important;
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.1) 0%, rgba(28, 33, 40, 1) 100%);
+}
+
+.rank-row:nth-child(3) { /* TOP 2 - Silver */
+    border-left: 4px solid #c0c0c0 !important;
+    background: linear-gradient(90deg, rgba(192, 192, 192, 0.1) 0%, rgba(28, 33, 40, 1) 100%);
+}
+
+.rank-row:nth-child(4) { /* TOP 3 - Bronze */
+    border-left: 4px solid #cd7f32 !important;
+    background: linear-gradient(90deg, rgba(205, 127, 50, 0.1) 0%, rgba(28, 33, 40, 1) 100%);
+}
 
 .nav-links { list-style: none; padding: 0; }
 .nav-links li {
