@@ -2,16 +2,17 @@
     --bg-dark: #0d1117;
     --side-bg: #161b22;
     --accent-green: #7ca352;
-    --text-main: #ffffff;
+    --card-bg: #21262d;
+    --text-dim: #8b949e;
 }
 
 * { box-sizing: border-box; }
 
 body {
     margin: 0;
-    background: var(--bg-dark);
-    color: var(--text-main);
-    font-family: sans-serif;
+    background-color: var(--bg-dark);
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
     display: flex;
 }
 
@@ -25,73 +26,110 @@ body {
     border-right: 1px solid #30363d;
 }
 
+.sidebar-header {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--accent-green);
+    margin-bottom: 30px;
+}
+
 .nav-links { list-style: none; padding: 0; }
 .nav-links li {
     padding: 12px;
     cursor: pointer;
     border-radius: 8px;
     margin-bottom: 5px;
-    color: #8b949e;
+    color: var(--text-dim);
+    transition: 0.2s;
 }
 
-.nav-links li.active, .nav-links li:hover {
+.nav-links li:hover, .nav-links li.active {
     background: var(--accent-green);
     color: black;
-}
-
-/* MAIN */
-.main-content {
-    margin-left: 240px;
-    padding: 40px;
-    width: 100%;
-}
-
-.category-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.cat-card {
-    background: #21262d;
-    padding: 60px;
-    border-radius: 15px;
-    text-align: center;
-    border: 2px solid #30363d;
-    cursor: pointer;
-    font-size: 1.5rem;
     font-weight: bold;
 }
 
-.cat-card:hover { border-color: var(--accent-green); }
-
-/* RANKING */
-.rank-row {
-    display: flex;
-    align-items: center;
-    background: #1c2128;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 10px;
+/* MAIN CONTENT */
+.main-content {
+    margin-left: 240px;
+    padding: 40px;
+    width: calc(100% - 240px);
 }
 
-/* IFRAME EDYTOR */
-.editor-frame-container {
-    width: 100%;
-    height: 80vh;
-    border-radius: 15px;
-    overflow: hidden;
+/* KATEGORIE */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.cat-card {
+    background: var(--card-bg);
+    padding: 60px 20px;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
     border: 2px solid #30363d;
+    transition: 0.3s;
 }
 
-.skin-iframe {
+.cat-card:hover {
+    border-color: var(--accent-green);
+    transform: translateY(-5px);
+}
+
+/* PIXEL EDITOR */
+.canvas-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pixel-grid {
+    display: grid;
+    grid-template-columns: repeat(32, 18px);
+    grid-template-rows: repeat(32, 18px);
+    border: 2px solid #30363d;
+    background: #000;
+}
+
+.pixel {
+    width: 18px;
+    height: 18px;
+    border: 0.1px solid #161b22;
+}
+
+.toolbar {
+    margin-bottom: 20px;
+    background: var(--side-bg);
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+/* MODAL & INPUTS */
+.modern-input {
     width: 100%;
-    height: 100%;
-    border: none;
+    max-width: 400px;
+    padding: 12px;
+    background: var(--side-bg);
+    border: 1px solid #30363d;
+    color: white;
+    border-radius: 8px;
+    margin-bottom: 20px;
 }
 
-/* PLAYERS */
-.players-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
-.player-card { background: #21262d; padding: 15px; border-radius: 10px; text-align: center; }
-
-.modern-input { width: 100%; max-width: 400px; padding: 12px; background: #161b22; border: 1px solid #30363d; color: white; border-radius: 8px; margin-bottom: 20px; }
-
-.add-run-btn { width: 100%; padding: 12px; background: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 20px; }
+.add-run-btn {
+    width: 100%;
+    padding: 12px;
+    background: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
 
 .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); display:flex; align-items:center; justify-content:center; }
 .modal-content { background: var(--side-bg); padding: 30px; border-radius: 15px; border: 1px solid #30363d; text-align: center; }
