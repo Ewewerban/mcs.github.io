@@ -5,16 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MC Speedruns Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://bsiatkowski.github.io/skinview3d/dist/skinview3d.bundle.js"></script>
 </head>
 <body>
 
     <nav class="sidebar">
         <div class="sidebar-header">🏆 MC Speedruns</div>
         <ul class="nav-links">
-    <li id="nav-categories" class="active" onclick="showSection('categories')">🏆 Speedruns</li>
-    <li id="nav-players" onclick="showSection('players')">👥 Players</li>
-    <li id="nav-editor" onclick="showSection('editor')">🖌️ Skin Creator</li>
-    <li id="nav-staff" onclick="showSection('staff')">🛠️ Staff</li>
+            <li id="nav-categories" class="active" onclick="showSection('categories')">🏆 Speedruns</li>
+            <li id="nav-players" onclick="showSection('players')">👥 Players</li>
+            <li id="nav-editor" onclick="showSection('editor')">👤 Skin Viewer 3D</li>
+            <li id="nav-staff" onclick="showSection('staff')">🛠️ Staff</li>
         </ul>
         <div class="sidebar-footer">
             <button class="add-run-btn" onclick="openModal()">+ Dodaj Speedrun</button>
@@ -43,14 +44,15 @@
         </div>
 
         <div id="editor-section" class="content-view" style="display: none;">
-            <h1>Autorski Skin Creator</h1>
-            <div class="canvas-wrapper">
-                <div class="toolbar">
-                    <input type="color" id="colorPicker" value="#7ca352">
-                    <button onclick="clearCanvas()" class="tool-btn">Wyczyść</button>
-                    <span style="color: #8b949e; font-size: 0.8rem;">Maluj myszką po kratkach</span>
+            <h1>Skin Viewer 3D</h1>
+            <div class="viewer-wrapper">
+                <div class="viewer-card">
+                    <canvas id="skin-container"></canvas>
                 </div>
-                <div id="pixel-grid" class="pixel-grid"></div>
+                <div class="viewer-controls">
+                    <input type="text" id="skinNickname" placeholder="Wpisz nick gracza..." class="modern-input">
+                    <button onclick="updateViewerSkin()" class="action-btn">Pokaż Skin 3D</button>
+                </div>
             </div>
         </div>
 
