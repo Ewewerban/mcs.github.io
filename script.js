@@ -61,3 +61,24 @@ function goBack() {
 // --- MODAL FUNCTIONS ---
 function openModal() { document.getElementById('addModal').style.display = "flex"; }
 function closeModal() { document.getElementById('addModal').style.display = "none"; }
+let isPlaying = false;
+const audio = document.getElementById('bg-music');
+const disc = document.querySelector('.disc-art');
+
+function toggleMusic() {
+    const btn = document.getElementById('play-btn');
+    if (isPlaying) {
+        audio.pause();
+        btn.innerText = '▶';
+        disc.style.animationPlayState = 'paused';
+    } else {
+        audio.play().catch(e => console.log("Wymagana interakcja użytkownika"));
+        btn.innerText = '⏸';
+        disc.style.animationPlayState = 'running';
+    }
+    isPlaying = !isPlaying;
+}
+
+function nextTrack() {
+    alert("More tracks coming soon!"); // Tutaj możesz dodać przełączanie plików mp3
+}
