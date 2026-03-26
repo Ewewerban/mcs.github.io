@@ -31,44 +31,37 @@
         <div id="discord-section" class="content-view" style="display: none;">
             <h1>Join Our Community</h1>
             <div style="display: flex; justify-content: center; margin-top: 30px; background: #23272a; padding: 20px; border-radius: 15px;">
-                <iframe 
-                    src="https://discord.com/widget?id=1481700436003127309&theme=dark" 
-                    width="350" 
-                    height="500" 
-                    allowtransparency="true" 
-                    frameborder="0" 
-                    sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
-                </iframe>
+                <iframe src="https://discord.com/widget?id=1481700436003127309&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
             </div>
         </div>
 
         <div id="ranking-view" class="content-view" style="display: none;"></div>
     </main>
 
+    <div class="music-player">
+        <img src="https://minecraft.wiki/images/Music_Disc_Pigstep_JE1_BE1.png" alt="Pigstep" class="disc-art" id="disc-img">
+        <div class="track-info">
+            <div class="track-name">Pigstep</div>
+            <div class="track-author">Lena Raine</div>
+        </div>
+        <div class="player-controls">
+            <button onclick="toggleMusic()" id="play-btn">▶</button>
+            <button onclick="nextTrack()">⏭</button>
+        </div>
+        <audio id="bg-music" loop>
+            <source src="Pigstep.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
     <div id="addModal" class="modal" style="display:none;">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <h2 style="color: #7ca352;">Submit Run</h2>
-            <p>Send your proof (video link) to:</p>
-            <p><strong>ewewerban@gmail.com</strong></p>
-            <button onclick="closeModal()" class="action-btn" style="margin-top: 20px;">Close</button>
+            <h2>Submit Run</h2>
+            <p>Send proof to: <strong>ewewerban@gmail.com</strong></p>
+            <button onclick="closeModal()" class="action-btn">Close</button>
         </div>
     </div>
 
     <script src="script.js"></script>
-    <div class="music-player">
-    <img src="https://minecraft.wiki/images/Music_Disc_Pigstep_JE1_BE1.png" alt="Pigstep" class="disc-art">
-    <div class="track-info">
-        <div class="track-name">Pigstep</div>
-        <div class="track-author">Lena Raine</div>
-    </div>
-    <div class="player-controls">
-        <button onclick="toggleMusic()" id="play-btn">▶</button>
-        <button onclick="nextTrack()">⏭</button>
-    </div>
-    <audio id="bg-music" loop>
-        <source src="music/pigstep.mp3" type="audio/mpeg">
-    </audio>
-</div>
 </body>
 </html>
