@@ -1,8 +1,23 @@
 // --- PLAYLISTA ---
 const playlist = [
-    { name: "Pigstep", author: "Lena Raine", file: "music/pigstep.mp3", img: "https://minecraft.wiki/images/Music_Disc_Pigstep_JE1_BE1.png" },
-    { name: "Otherside", author: "Lena Raine", file: "music/otherside.mp3", img: "https://minecraft.wiki/images/Music_Disc_Otherside_JE2_BE2.png" },
-    { name: "5", author: "Samuel Åberg", file: "music/5.mp3", img: "https://minecraft.wiki/images/Music_Disc_5_JE1_BE1.png" }
+    { 
+        name: "Pigstep", 
+        author: "Lena Raine", 
+        file: "music/pigstep.mp3", 
+        img: "https://minecraft.wiki/images/Music_Disc_Pigstep_JE1_BE1.png" 
+    },
+    { 
+        name: "Otherside", 
+        author: "Lena Raine", 
+        file: "music/otherside.mp3", 
+        img: "https://minecraft.wiki/images/Music_Disc_Otherside_JE2_BE2.png" 
+    },
+    { 
+        name: "5", 
+        author: "Samuel Åberg", 
+        file: "music/5.mp3", 
+        img: "https://minecraft.wiki/images/Music_Disc_5_JE1_BE1.png" 
+    }
 ];
 
 let currentTrackIndex = 0;
