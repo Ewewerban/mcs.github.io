@@ -1,161 +1,150 @@
-:root {
-    --bg-dark: #0d1117;
-    --side-bg: #161b22;
-    --accent-green: #7ca352;
-    --card-bg: #21262d;
-    --text-dim: #8b949e;
-}
-
-* { box-sizing: border-box; }
-
+/* --- OGÓLNE USTAWIENIA --- */
 body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0d1117; /* Ciemne tło GitHubowe */
+    color: #adbac7;
     margin: 0;
-    background-color: var(--bg-dark);
-    color: white;
-    font-family: 'Segoe UI', sans-serif;
     display: flex;
-}
-
-.sidebar {
-    width: 240px;
-    background: var(--side-bg);
     height: 100vh;
-    position: fixed;
-    padding: 20px;
-    border-right: 1px solid #30363d;
-}
-/* Podium highlights */
-.rank-row:nth-child(2) { /* TOP 1 - Gold */
-    border-left: 4px solid #ffd700 !important;
-    background: linear-gradient(90deg, rgba(255, 215, 0, 0.1) 0%, rgba(28, 33, 40, 1) 100%);
-}
-
-.rank-row:nth-child(3) { /* TOP 2 - Silver */
-    border-left: 4px solid #c0c0c0 !important;
-    background: linear-gradient(90deg, rgba(192, 192, 192, 0.1) 0%, rgba(28, 33, 40, 1) 100%);
-}
-
-.rank-row:nth-child(4) { /* TOP 3 - Bronze */
-    border-left: 4px solid #cd7f32 !important;
-    background: linear-gradient(90deg, rgba(205, 127, 50, 0.1) 0%, rgba(28, 33, 40, 1) 100%);
-}
-
-.nav-links { list-style: none; padding: 0; }
-.nav-links li {
-    padding: 12px;
-    cursor: pointer;
-    border-radius: 8px;
-    margin-bottom: 5px;
-    color: var(--text-dim);
-}
-
-.nav-links li.active, .nav-links li:hover {
-    background: var(--accent-green);
-    color: black;
-    font-weight: bold;
-}
-
-.main-content {
-    margin-left: 240px;
-    padding: 40px;
-    width: calc(100% - 240px);
-}
-
-.category-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-}
-
-.cat-card {
-    background: var(--card-bg);
-    padding: 40px;
-    border-radius: 12px;
-    text-align: center;
-    cursor: pointer;
-    border: 2px solid #30363d;
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
-.cat-card:hover { border-color: var(--accent-green); }
-
-/* VIEWER 3D */
-.viewer-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-.viewer-card {
-    background: #000;
-    border-radius: 15px;
-    border: 2px solid #30363d;
     overflow: hidden;
 }
 
-.modern-input {
-    padding: 12px;
-    background: var(--side-bg);
-    border: 1px solid #30363d;
-    color: white;
-    border-radius: 8px;
-    width: 250px;
+/* --- MENU BOCZNE (SIDEBAR) --- */
+.sidebar {
+    width: 260px;
+    background-color: #161b22;
+    border-right: 1px solid #30363d;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
 }
 
-.action-btn {
-    padding: 12px 20px;
-    background: var(--accent-green);
-    border: none;
-    border-radius: 8px;
+.sidebar-header {
+    font-size: 22px;
     font-weight: bold;
-    cursor: pointer;
+    color: #f0f6fc;
+    margin-bottom: 30px;
+    text-align: center;
 }
 
-.players-grid {
+.nav-links {
+    list-style: none;
+    padding: 0;
+    flex-grow: 1;
+}
+
+.nav-links li {
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-links li:hover {
+    background-color: #21262d;
+}
+
+.nav-links li.active {
+    background-color: #7ca352; /* Zielony kolor aktywny */
+    color: white;
+}
+
+/* --- PRZYCISK SUBMIT --- */
+.sidebar-footer {
+    padding-top: 20px;
+}
+
+.add-run-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #21262d;
+    color: #adbac7;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.add-run-btn:hover {
+    background-color: #30363d;
+    border-color: #8b949e;
+}
+
+/* --- GŁÓWNA TREŚĆ --- */
+.main-content {
+    flex-grow: 1;
+    padding: 40px;
+    overflow-y: auto;
+    background-color: #0d1117;
+}
+
+h1 {
+    color: #f0f6fc;
+    margin-top: 0;
+}
+
+/* --- KARTY KATEGORII I ANIMACJE --- */
+.category-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
 }
 
-.modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); display:flex; align-items:center; justify-content:center; }
-.modal-content { background: var(--side-bg); padding: 30px; border-radius: 15px; text-align: center; }
-/* ANIMACJE DLA KART */
 .cat-card {
-    transition: all 0.3s ease;
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    padding: 30px 20px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Płynna animacja */
     cursor: pointer;
 }
 
+/* Efekt najechania (Hover) */
 .cat-card:hover {
-    transform: translateY(-5px) scale(1.02);
-    background: #2d333b;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-    border-color: #7ca352;
+    transform: translateY(-8px) scale(1.02); /* Karta płynie do góry */
+    background-color: #21262d;
+    border-color: #7ca352; /* Zielona obwódka przy najechaniu */
+    box-shadow: 0 12px 24px rgba(0,0,0,0.5);
 }
 
-/* SPOTIFY STYLE PLAYER */
+/* --- ODOTWARZACZ W STYLU SPOTIFY --- */
 .music-player {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #1c2128;
-    padding: 12px;
-    border-radius: 12px;
+    bottom: 25px;
+    right: 25px;
+    background: rgba(22, 27, 34, 0.95);
+    padding: 12px 20px;
+    border-radius: 15px;
     display: flex;
     align-items: center;
     gap: 15px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.7);
     border: 1px solid #30363d;
     z-index: 1000;
+    backdrop-filter: blur(8px);
 }
 
 .disc-art {
     width: 45px;
     height: 45px;
-    border-radius: 6px;
+    border-radius: 50%;
+    border: 2px solid #0d1117;
     animation: rotate 10s linear infinite;
-    animation-play-state: paused;
+    animation-play-state: paused; /* Kręci się tylko gdy gra muzyka */
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 .track-info {
@@ -163,31 +152,77 @@ body {
 }
 
 .track-name {
-    font-weight: bold;
     font-size: 14px;
-    color: #adbac7;
+    font-weight: bold;
+    color: #f0f6fc;
 }
 
 .track-author {
     font-size: 11px;
-    color: #768390;
+    color: #8b949e;
 }
 
 .player-controls button {
     background: none;
     border: none;
     color: #adbac7;
-    font-size: 18px;
+    font-size: 22px;
     cursor: pointer;
     transition: 0.2s;
 }
 
 .player-controls button:hover {
     color: #7ca352;
-    transform: scale(1.1);
+    transform: scale(1.2);
 }
 
-@keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+/* --- MODAL (OKNO SUBMIT) --- */
+.modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-content {
+    background-color: #161b22;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #30363d;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 15px; right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #8b949e;
+}
+
+.action-btn {
+    background-color: #7ca352;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+/* --- RANKINGI --- */
+.rank-row {
+    transition: 0.2s;
+}
+
+.rank-row:hover {
+    background-color: #21262d !important;
 }
