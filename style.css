@@ -1,5 +1,5 @@
 body {
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
     background-color: #0d1117;
     color: #adbac7;
     margin: 0;
@@ -21,26 +21,26 @@ body {
 .sidebar-header {
     font-size: 22px;
     font-weight: bold;
+    color: #f0f6fc;
     margin-bottom: 30px;
     text-align: center;
 }
 
 .nav-links { list-style: none; padding: 0; flex-grow: 1; }
 .nav-links li {
-    padding: 12px;
+    padding: 12px 15px;
     margin-bottom: 8px;
     border-radius: 8px;
     cursor: pointer;
     transition: 0.2s;
 }
-
-.nav-links li:hover { background: #21262d; }
-.nav-links li.active { background: #7ca352; color: white; }
+.nav-links li:hover { background-color: #21262d; }
+.nav-links li.active { background-color: #7ca352; color: white; }
 
 .add-run-btn {
     width: 100%;
     padding: 12px;
-    background: #21262d;
+    background-color: #21262d;
     color: #adbac7;
     border: 1px solid #30363d;
     border-radius: 6px;
@@ -51,7 +51,6 @@ body {
 /* MAIN CONTENT */
 .main-content { flex-grow: 1; padding: 40px; overflow-y: auto; }
 
-/* CATEGORY CARDS & ANIMATIONS */
 .category-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
 .cat-card {
     background: #161b22;
@@ -61,59 +60,50 @@ body {
     text-align: center;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: 0.3s;
 }
+.cat-card:hover { transform: translateY(-5px); border-color: #7ca352; }
 
-.cat-card:hover {
-    transform: translateY(-8px);
-    border-color: #7ca352;
-    background: #21262d;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-}
-
-/* MUSIC PLAYER */
-.music-player {
+/* SPOTIFY PLAYER */
+.spotify-player-container {
     position: fixed;
-    bottom: 25px;
-    right: 25px;
-    background: rgba(22, 27, 34, 0.95);
-    padding: 12px 20px;
+    bottom: 20px;
+    right: 20px;
+    width: 320px;
+    background: #161b22;
+    padding: 12px;
     border-radius: 15px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
     border: 1px solid #30363d;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-    z-index: 1000;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
 }
 
-.disc-art {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    animation: rotate 10s linear infinite;
-    animation-play-state: paused;
+.spotify-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
 }
 
-@keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-.player-controls button {
-    background: none;
-    border: none;
+.spotify-nav button {
+    background: #21262d;
     color: #adbac7;
+    border: 1px solid #30363d;
+    padding: 6px 12px;
+    border-radius: 6px;
     cursor: pointer;
+    font-size: 13px;
     transition: 0.2s;
 }
 
-.main-btn { font-size: 24px; }
-.nav-btn { font-size: 18px; }
-.player-controls button:hover { color: #7ca352; transform: scale(1.1); }
+.spotify-nav button:hover { background: #7ca352; color: white; }
 
 /* MODAL */
 .modal {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center;
+    background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center;
+    z-index: 2000;
 }
-.modal-content { background: #161b22; padding: 30px; border-radius: 12px; text-align: center; position: relative; }
-.close { position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 20px; }
-.action-btn { background: #7ca352; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
+.modal-content { 
+    background: #161b22; padding: 40px; border-radius: 15px; 
+    text-align: center; border: 1px solid #30363d; 
+}
+.action-btn { background: #7ca352; color: white; border: none; padding: 10px 25px; border-radius: 6px; cursor: pointer; font-weight: bold; }
