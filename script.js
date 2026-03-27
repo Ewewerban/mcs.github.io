@@ -1,4 +1,4 @@
-// STABLE PLAYLIST
+// --- MUSIC PLAYER LOGIC ---
 const playlist = [
     { 
         name: "Pigstep", 
@@ -31,14 +31,15 @@ const trackAuthorDisplay = document.querySelector('.track-author');
 
 function loadTrack(index) {
     const track = playlist[index];
-    audio.src = track.file;
-    discImg.src = track.img;
-    trackNameDisplay.innerText = track.name;
-    trackAuthorDisplay.innerText = track.author;
-    audio.load(); // Wymuszamy załadowanie nowego źródła
+    if (audio) {
+        audio.src = track.file;
+        audio.load();
+    }
+    if (discImg) discImg.src = track.img;
+    if (trackNameDisplay) trackNameDisplay.innerText = track.name;
+    if (trackAuthorDisplay) trackAuthorDisplay.innerText = track.author;
 }
 
-// TA FUNKCJA MUSI ZADZIAŁAĆ
 function toggleMusic() {
     if (isPlaying) {
         audio.pause();
@@ -46,40 +47,50 @@ function toggleMusic() {
         if (discImg) discImg.style.animationPlayState = 'paused';
         isPlaying = false;
     } else {
-        // Próba odtworzenia
-        const playPromise = audio.play();
-
-        if (playPromise !== undefined) {
-            playPromise.then(() => {
-                playBtn.innerText = '⏸';
-                if (discImg) discImg.style.animationPlayState = 'running';
-                isPlaying = true;
-            }).catch(error => {
-                console.log("Autoplay blocked. Try clicking a menu item first.");
-                // Nie zmieniamy ikonki na wyciszenie, zostawiamy Play
-                playBtn.innerText = '▶';
-                isPlaying = false;
-            });
-        }
+        audio.play().then(() => {
+            playBtn.innerText = '⏸';
+            if (discImg) discImg.style.animationPlayState = 'running';
+            isPlaying = true;
+        }).catch(error => {
+            console.log("Autoplay blocked. Click the page first.");
+            playBtn.innerText = '▶';
+        });
     }
 }
 
 function nextTrack() {
     currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
     loadTrack(currentTrackIndex);
-    // Jeśli grało wcześniej, próbujemy odpalić nową piosenkę
-    if (isPlaying) {
-        audio.play().catch(() => isPlaying = false);
-    }
+    if (isPlaying) audio.play().catch(() => {});
 }
 
 function prevTrack() {
     currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
     loadTrack(currentTrackIndex);
-    if (isPlaying) {
-        audio.play().catch(() => isPlaying = false);
-    }
+    if (isPlaying) audio.play().catch(() => {});
 }
 
-// Initial load
+// --- NAVIGATION & SIDEBAR LOGIC (Tego brakowało!) ---
+
+function showSection(id) {
+    // Ukrywa wszystkie widoki
+    document.querySelectorAll('.content-view').forEach(v => v.style.display = 'none');
+    
+    // Pokazuje wybrany widok
+    const target = document.getElementById(id + '-section');
+    if (target) target.style.display = 'block';
+    
+    // Jeśli wracamy do kategorii, ukrywamy widok rankingu
+    if(id === 'categories') {
+        const rv = document.getElementById('ranking-view');
+        if (rv) rv.style.display = 'none';
+    }
+
+    // Aktualizacja aktywnej klasy w menu
+    document.querySelectorAll('.nav-links li').forEach(li => li.classList.remove('active'));
+    const activeNav = document.getElementById('nav-' + id);
+    if (activeNav) activeNav.classList.add('active');
+}
+
+// Inicjalizacja
 loadTrack(currentTrackIndex);
