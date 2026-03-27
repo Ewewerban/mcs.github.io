@@ -1,4 +1,4 @@
-// --- 1. PLAYLISTA ---
+// --- 1. CONFIGURATION (Playlist & Data) ---
 const playlist = [
     { 
         name: "Pigstep", 
@@ -23,15 +23,21 @@ const playlist = [
 let currentTrackIndex = 0;
 let isPlaying = false;
 
+// DOM Elements
 const audio = document.getElementById('bg-music');
 const discImg = document.getElementById('disc-img');
 const playBtn = document.getElementById('play-btn');
 const trackNameDisplay = document.querySelector('.track-name');
 const trackAuthorDisplay = document.querySelector('.track-author');
 
+// --- 2. MUSIC PLAYER FUNCTIONS ---
+
 function loadTrack(index) {
     const track = playlist[index];
-    if (audio) { audio.src = track.file; audio.load(); }
+    if (audio) {
+        audio.src = track.file;
+        audio.load();
+    }
     if (discImg) discImg.src = track.img;
     if (trackNameDisplay) trackNameDisplay.innerText = track.name;
     if (trackAuthorDisplay) trackAuthorDisplay.innerText = track.author;
@@ -48,7 +54,9 @@ function toggleMusic() {
             playBtn.innerText = '⏸';
             if (discImg) discImg.style.animationPlayState = 'running';
             isPlaying = true;
-        }).catch(e => console.log("Blocked by browser. Click page first."));
+        }).catch(error => {
+            console.log("Playback blocked. Click the page first.");
+        });
     }
 }
 
@@ -64,22 +72,28 @@ function prevTrack() {
     if (isPlaying) audio.play().catch(() => {});
 }
 
-// --- 2. NAWIGACJA (Leaderboards / Discord) ---
+// --- 3. NAVIGATION & LEADERBOARD LOGIC ---
+
 function showSection(id) {
+    // Hide all views
     document.querySelectorAll('.content-view').forEach(v => v.style.display = 'none');
+    
+    // Show targeted section
     const target = document.getElementById(id + '-section');
     if (target) target.style.display = 'block';
     
+    // Reset ranking view if going back to categories
     if(id === 'categories') {
         const rv = document.getElementById('ranking-view');
         if (rv) rv.style.display = 'none';
     }
+
+    // Update Sidebar Active State
     document.querySelectorAll('.nav-links li').forEach(li => li.classList.remove('active'));
     const activeNav = document.getElementById('nav-' + id);
     if (activeNav) activeNav.classList.add('active');
 }
 
-// --- 3. ŁADOWANIE TABELI Z PLIKU JSON ---
 async function loadCategory(name) {
     const rv = document.getElementById('ranking-view');
     const catSection = document.getElementById('categories-section');
@@ -93,9 +107,12 @@ async function loadCategory(name) {
     try {
         const response = await fetch(`data/${name}.json`);
         const data = await response.json();
+        
+        // Sort by time (assuming format HH:MM:SS or MM:SS)
         const sorted = data.runs.sort((a, b) => a.time.localeCompare(b.time));
         
-        let html = `<button onclick="showSection('categories')" class="add-run-btn" style="width:100px; margin-bottom:20px;">← Back</button><h1>${data.categoryName}</h1>`;
+        let html = `<button onclick="showSection('categories')" class="add-run-btn" style="width:100px; margin-bottom:20px;">← Back</button>
+                    <h1>${data.categoryName}</h1>`;
         
         sorted.forEach((run, i) => {
             const rank = i + 1;
@@ -111,9 +128,8 @@ async function loadCategory(name) {
         if (rv) rv.innerHTML = html;
     } catch (e) {
         console.error("Error loading JSON:", e);
+        if (rv) rv.innerHTML = `<h1>Data not found</h1><button onclick="showSection('categories')">Back</button>`;
     }
 }
 
-// Start
-audio.onended = nextTrack;
-loadTrack(currentTrackIndex);
+// --- 4. INITIALIZATION & AUDIO UNLOCKER
