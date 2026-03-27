@@ -10,7 +10,6 @@ const playlist = [
         name: "Otherside", 
         author: "Lena Raine", 
         file: "https://vgmtreasurechest.com/soundtracks/minecraft-otherside/otherside.mp3", 
-        // POPRAWIONY LINK DO OBRAZKA:
         img: "https://minecraft.wiki/images/Music_Disc_Otherside_JE2_BE2.png" 
     },
     { 
@@ -30,14 +29,9 @@ const playBtn = document.getElementById('play-btn');
 const trackNameDisplay = document.querySelector('.track-name');
 const trackAuthorDisplay = document.querySelector('.track-author');
 
-// --- 2. FUNKCJE ODTWARZACZA ---
-
 function loadTrack(index) {
     const track = playlist[index];
-    if (audio) {
-        audio.src = track.file;
-        audio.load();
-    }
+    if (audio) { audio.src = track.file; audio.load(); }
     if (discImg) discImg.src = track.img;
     if (trackNameDisplay) trackNameDisplay.innerText = track.name;
     if (trackAuthorDisplay) trackAuthorDisplay.innerText = track.author;
@@ -54,9 +48,7 @@ function toggleMusic() {
             playBtn.innerText = '⏸';
             if (discImg) discImg.style.animationPlayState = 'running';
             isPlaying = true;
-        }).catch(error => {
-            console.log("Autoplay blocked. Click page first.");
-        });
+        }).catch(e => console.log("Blocked by browser. Click page first."));
     }
 }
 
@@ -72,8 +64,7 @@ function prevTrack() {
     if (isPlaying) audio.play().catch(() => {});
 }
 
-// --- 3. LOGIKA KATEGORII I SEKCJI ---
-
+// --- 2. NAWIGACJA (Leaderboards / Discord) ---
 function showSection(id) {
     document.querySelectorAll('.content-view').forEach(v => v.style.display = 'none');
     const target = document.getElementById(id + '-section');
@@ -83,12 +74,12 @@ function showSection(id) {
         const rv = document.getElementById('ranking-view');
         if (rv) rv.style.display = 'none';
     }
-
     document.querySelectorAll('.nav-links li').forEach(li => li.classList.remove('active'));
     const activeNav = document.getElementById('nav-' + id);
     if (activeNav) activeNav.classList.add('active');
 }
 
+// --- 3. ŁADOWANIE TABELI Z PLIKU JSON ---
 async function loadCategory(name) {
     const rv = document.getElementById('ranking-view');
     const catSection = document.getElementById('categories-section');
@@ -104,8 +95,7 @@ async function loadCategory(name) {
         const data = await response.json();
         const sorted = data.runs.sort((a, b) => a.time.localeCompare(b.time));
         
-        let html = `<button onclick="showSection('categories')" class="add-run-btn" style="width:100px; margin-bottom:20px;">← Back</button>
-                    <h1>${data.categoryName}</h1>`;
+        let html = `<button onclick="showSection('categories')" class="add-run-btn" style="width:100px; margin-bottom:20px;">← Back</button><h1>${data.categoryName}</h1>`;
         
         sorted.forEach((run, i) => {
             const rank = i + 1;
@@ -120,10 +110,10 @@ async function loadCategory(name) {
         });
         if (rv) rv.innerHTML = html;
     } catch (e) {
-        console.error("Error loading category:", e);
+        console.error("Error loading JSON:", e);
     }
 }
 
-// --- 4. INICJALIZACJA ---
+// Start
 audio.onended = nextTrack;
 loadTrack(currentTrackIndex);
