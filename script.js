@@ -1,25 +1,24 @@
+// Database of tracks with stable MP3 links
 const playlist = [
     { 
         name: "Pigstep", 
         author: "Lena Raine", 
-        // To jest bezpośredni link do czystego pliku audio
-        file: "https://minecraft.wiki/images/Music_Disc_Pigstep.ogg?20200417210419", 
+        file: "https://vgmtreasurechest.com/soundtracks/minecraft-music-disc-pigstep/Pigstep.mp3", 
         img: "https://minecraft.wiki/images/Music_Disc_Pigstep_JE1_BE1.png" 
     },
     { 
         name: "Otherside", 
         author: "Lena Raine", 
-        file: "https://minecraft.wiki/images/Music_Disc_Otherside.ogg?20211020173000", 
+        file: "https://vgmtreasurechest.com/soundtracks/minecraft-otherside/otherside.mp3", 
         img: "https://minecraft.wiki/images/Music_Disc_Otherside_JE2_BE2.png" 
     },
     { 
         name: "5", 
         author: "Samuel Åberg", 
-        file: "https://minecraft.wiki/images/Music_Disc_5.ogg?20220519170000", 
+        file: "https://vgmtreasurechest.com/soundtracks/minecraft-music-disc-5/5.mp3", 
         img: "https://minecraft.wiki/images/Music_Disc_5_JE1_BE1.png" 
     }
 ];
-
 
 let currentTrackIndex = 0;
 let isPlaying = false;
@@ -30,29 +29,34 @@ const playBtn = document.getElementById('play-btn');
 const trackNameDisplay = document.querySelector('.track-name');
 const trackAuthorDisplay = document.querySelector('.track-author');
 
+// Initial load
 function loadTrack(index) {
     const track = playlist[index];
     audio.src = track.file;
-    // Ważne: Image source stays as is, but index.html MUST have the meta tag
     discImg.src = track.img;
     trackNameDisplay.innerText = track.name;
     trackAuthorDisplay.innerText = track.author;
 }
 
+// Fixed Toggle Function (No more annoying alerts!)
 function toggleMusic() {
     if (isPlaying) {
         audio.pause();
         playBtn.innerText = '▶';
         discImg.style.animationPlayState = 'paused';
+        isPlaying = false;
     } else {
-        // We use a promise to handle browsers blocking auto-play
+        // We use a promise to handle the "click anywhere" rule silently
         audio.play().then(() => {
             playBtn.innerText = '⏸';
             discImg.style.animationPlayState = 'running';
-        }).catch(e => alert("Please click anywhere on the page first to enable audio!"));
-        
+            isPlaying = true;
+        }).catch(error => {
+            console.log("Autoplay blocked. User needs to click the page first.");
+            // Instead of a pop-up, we just change the button icon to remind you to click
+            playBtn.innerText = '🔇';
+        });
     }
-    isPlaying = !isPlaying;
 }
 
 function nextTrack() {
@@ -67,28 +71,36 @@ function prevTrack() {
     if (isPlaying) audio.play();
 }
 
-// Auto-play next track
 audio.onended = nextTrack;
-
-// Initial Load
 loadTrack(currentTrackIndex);
 
-// --- NAVIGATION & LEADERBOARDS ---
+// --- SIDEBAR & CONTENT LOGIC ---
 
 function showSection(id) {
     document.querySelectorAll('.content-view').forEach(v => v.style.display = 'none');
-    document.getElementById(id + '-section').style.display = 'block';
-    if(id === 'categories') document.getElementById('ranking-view').style.display = 'none';
+    const targetSection = document.getElementById(id + '-section');
+    if (targetSection) targetSection.style.display = 'block';
     
+    if(id === 'categories') {
+        const rankingView = document.getElementById('ranking-view');
+        if (rankingView) rankingView.style.display = 'none';
+    }
+
     document.querySelectorAll('.nav-links li').forEach(li => li.classList.remove('active'));
-    document.getElementById('nav-' + id).classList.add('active');
+    const navItem = document.getElementById('nav-' + id);
+    if (navItem) navItem.classList.add('active');
 }
 
 async function loadCategory(name) {
     const rv = document.getElementById('ranking-view');
-    document.getElementById('categories-section').style.display = 'none';
-    rv.style.display = 'block';
-    
+    const catSection = document.getElementById('categories-section');
+    if (catSection) catSection.style.display = 'none';
+    if (rv) {
+        rv.style.display = 'block';
+        rv.innerHTML = `<button onclick="showSection('categories')" class="add-run-btn" style="width:120px; margin-bottom:20px;">← Back</button>
+                        <h1>Loading ${name.toUpperCase()}...</h1>`;
+    }
+
     try {
         const response = await fetch(`data/${name}.json`);
         const data = await response.json();
@@ -108,11 +120,18 @@ async function loadCategory(name) {
                     <span style="color:#58a6ff; font-weight:bold;">${run.time}</span>
                 </div>`;
         });
-        rv.innerHTML = html;
+        if (rv) rv.innerHTML = html;
     } catch (e) {
-        console.error("Error loading JSON:", e);
+        console.error("Failed to load leaderboard:", e);
     }
 }
 
-function openModal() { document.getElementById('addModal').style.display = 'flex'; }
-function closeModal() { document.getElementById('addModal').style.display = 'none'; }
+function openModal() { 
+    const modal = document.getElementById('addModal');
+    if (modal) modal.style.display = 'flex'; 
+}
+
+function closeModal() { 
+    const modal = document.getElementById('addModal');
+    if (modal) modal.style.display = 'none'; 
+}
