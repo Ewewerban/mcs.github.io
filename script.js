@@ -46,16 +46,23 @@ function toggleMusic() {
         discImg.style.animationPlayState = 'paused';
         isPlaying = false;
     } else {
-        // We use a promise to handle the "click anywhere" rule silently
-        audio.play().then(() => {
-            playBtn.innerText = '⏸';
-            discImg.style.animationPlayState = 'running';
-            isPlaying = true;
-        }).catch(error => {
-            console.log("Autoplay blocked. User needs to click the page first.");
-            // Instead of a pop-up, we just change the button icon to remind you to click
-            playBtn.innerText = '🔇';
-        });
+        // Obietnica (Play Promise)
+        var playPromise = audio.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                // Automatyczne odtwarzanie wystartowało!
+                playBtn.innerText = '⏸';
+                discImg.style.animationPlayState = 'running';
+                isPlaying = true;
+            }).catch(error => {
+                // Autoplay został zablokowany - to normalne
+                console.log("Waiting for user interaction...");
+                // Próbujemy jeszcze raz po krótkiej chwili lub zostajemy przy ikonie Play
+                playBtn.innerText = '▶';
+                isPlaying = false;
+            });
+        }
     }
 }
 
