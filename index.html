@@ -39,23 +39,27 @@
         <div id="ranking-view" class="content-view" style="display: none;"></div>
     </main>
 
-    <div class="spotify-player-container">
-        <iframe id="spotify-widget" 
-            src="https://open.spotify.com/embed/track/1q9696vI396906uS9Y0Y67?utm_source=generator&theme=0" 
-            width="100%" height="80" frameBorder="0" allowfullscreen="" 
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
-        </iframe>
-        <div class="spotify-nav">
-            <button onclick="changeTrack(-1)">⏮ Previous</button>
-            <button onclick="changeTrack(1)">Next ⏭</button>
+    <div class="music-player">
+        <img src="https://minecraft.wiki/images/Music_Disc_Pigstep_JE1_BE1.png" alt="Disc" class="disc-art" id="disc-img">
+        <div class="track-info">
+            <div class="track-name">Pigstep</div>
+            <div class="track-author">Lena Raine</div>
         </div>
+        <div class="player-controls">
+            <button onclick="prevTrack()" class="nav-btn">⏮</button>
+            <button onclick="toggleMusic()" id="play-btn" class="main-btn">▶</button>
+            <button onclick="nextTrack()" class="nav-btn">⏭</button>
+        </div>
+        <audio id="bg-music">
+            <source src="" type="audio/mpeg">
+        </audio>
     </div>
 
     <div id="addModal" class="modal" style="display:none;">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <h2 style="color: #7ca352;">Submit Your Run</h2>
-            <p>Send your proof (video link) to: <br><strong>ewewerban@gmail.com</strong></p>
+            <p>Send proof to: <strong>ewewerban@gmail.com</strong></p>
             <button onclick="closeModal()" class="action-btn">Close</button>
         </div>
     </div>
