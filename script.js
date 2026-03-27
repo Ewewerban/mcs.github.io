@@ -1,4 +1,4 @@
-// --- 1. PLAYLISTA (Stabilne linki MP3) ---
+// --- 1. PLAYLISTA ---
 const playlist = [
     { 
         name: "Pigstep", 
@@ -10,7 +10,8 @@ const playlist = [
         name: "Otherside", 
         author: "Lena Raine", 
         file: "https://vgmtreasurechest.com/soundtracks/minecraft-otherside/otherside.mp3", 
-        img: "https://minecraft.wiki/w/Music_Disc_otherside#/media/File:Music_Disc_otherside_JE1_BE1.png" 
+        // POPRAWIONY LINK DO OBRAZKA:
+        img: "https://minecraft.wiki/images/Music_Disc_Otherside_JE2_BE2.png" 
     },
     { 
         name: "5", 
@@ -49,14 +50,12 @@ function toggleMusic() {
         if (discImg) discImg.style.animationPlayState = 'paused';
         isPlaying = false;
     } else {
-        // Próba odtworzenia z obsługą blokady przeglądarki
         audio.play().then(() => {
             playBtn.innerText = '⏸';
             if (discImg) discImg.style.animationPlayState = 'running';
             isPlaying = true;
         }).catch(error => {
-            console.log("Blokada autoplay. Kliknij coś na stronie najpierw.");
-            // Nie zmieniamy ikony, czekamy na interakcję
+            console.log("Autoplay blocked. Click page first.");
         });
     }
 }
@@ -73,23 +72,18 @@ function prevTrack() {
     if (isPlaying) audio.play().catch(() => {});
 }
 
-// --- 3. LOGIKA STRONY I KATEGORII (Tego brakowało!) ---
+// --- 3. LOGIKA KATEGORII I SEKCJI ---
 
 function showSection(id) {
-    // Ukryj wszystkie sekcje
     document.querySelectorAll('.content-view').forEach(v => v.style.display = 'none');
-    
-    // Pokaż wybraną sekcję
     const target = document.getElementById(id + '-section');
     if (target) target.style.display = 'block';
     
-    // Ukryj widok rankingu jeśli wracamy do wyboru kategorii
     if(id === 'categories') {
         const rv = document.getElementById('ranking-view');
         if (rv) rv.style.display = 'none';
     }
 
-    // Zmień aktywny przycisk w menu
     document.querySelectorAll('.nav-links li').forEach(li => li.classList.remove('active'));
     const activeNav = document.getElementById('nav-' + id);
     if (activeNav) activeNav.classList.add('active');
@@ -106,5 +100,30 @@ async function loadCategory(name) {
     }
 
     try {
-        // Upewnij się, że pliki .json są w folderze /data/
-        const response = await
+        const response = await fetch(`data/${name}.json`);
+        const data = await response.json();
+        const sorted = data.runs.sort((a, b) => a.time.localeCompare(b.time));
+        
+        let html = `<button onclick="showSection('categories')" class="add-run-btn" style="width:100px; margin-bottom:20px;">← Back</button>
+                    <h1>${data.categoryName}</h1>`;
+        
+        sorted.forEach((run, i) => {
+            const rank = i + 1;
+            const medal = rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : rank + ".";
+            html += `
+                <div class="rank-row" style="display:flex; align-items:center; background:#1c2128; padding:15px; margin-top:10px; border-radius:8px; border-left: 4px solid ${rank <= 3 ? '#7ca352' : 'transparent'}">
+                    <span style="width:40px; font-weight:bold;">${medal}</span>
+                    <img src="https://mc-heads.net/avatar/${run.name}/32" style="margin-right:15px; border-radius:4px;">
+                    <strong style="flex-grow:1;">${run.name}</strong>
+                    <span style="color:#58a6ff; font-weight:bold;">${run.time}</span>
+                </div>`;
+        });
+        if (rv) rv.innerHTML = html;
+    } catch (e) {
+        console.error("Error loading category:", e);
+    }
+}
+
+// --- 4. INICJALIZACJA ---
+audio.onended = nextTrack;
+loadTrack(currentTrackIndex);
