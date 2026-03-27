@@ -2,14 +2,20 @@ const playlist = [
     { 
         name: "Pigstep", 
         author: "Lena Raine", 
-        file: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", 
+        file: "https://minecraft.wiki/images/Music_Disc_Pigstep.ogg", 
         img: "https://minecraft.wiki/images/Music_Disc_Pigstep_JE1_BE1.png" 
     },
     { 
         name: "Otherside", 
         author: "Lena Raine", 
-        file: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", 
+        file: "https://minecraft.wiki/images/Music_Disc_Otherside.ogg", 
         img: "https://minecraft.wiki/images/Music_Disc_Otherside_JE2_BE2.png" 
+    },
+    { 
+        name: "5", 
+        author: "Samuel Åberg", 
+        file: "https://minecraft.wiki/images/Music_Disc_5.ogg", 
+        img: "https://minecraft.wiki/images/Music_Disc_5_JE1_BE1.png" 
     }
 ];
 
