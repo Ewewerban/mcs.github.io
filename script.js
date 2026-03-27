@@ -1,90 +1,50 @@
-// --- PLAYLISTA ---
-const playlist = [
-    { 
-        name: "Pigstep", 
-        author: "Lena Raine", 
-        file: "music/pigstep.mp3", 
-        img: "https://minecraft.wiki/images/Music_Disc_Pigstep_JE1_BE1.png" 
-    },
-    { 
-        name: "Otherside", 
-        author: "Lena Raine", 
-        file: "music/otherside.mp3", 
-        img: "https://minecraft.wiki/images/Music_Disc_Otherside_JE2_BE2.png" 
-    },
-    { 
-        name: "5", 
-        author: "Samuel Åberg", 
-        file: "music/5.mp3", 
-        img: "https://minecraft.wiki/images/Music_Disc_5_JE1_BE1.png" 
-    }
+// Official Spotify Track IDs
+const tracks = [
+    "1q9696vI396906uS9Y0Y67", // Pigstep
+    "7m6S667YxV9R8fP37Jt0S0", // Otherside
+    "3f7m667YxV9R8fP37Jt0S0"  // Music Disc 5
 ];
 
 let currentTrackIndex = 0;
-let isPlaying = false;
 
-const audio = document.getElementById('bg-music');
-const discImg = document.getElementById('disc-img');
-const playBtn = document.getElementById('play-btn');
-const trackName = document.querySelector('.track-name');
-const trackAuthor = document.querySelector('.track-author');
-
-function loadTrack(index) {
-    const track = playlist[index];
-    audio.src = track.file;
-    discImg.src = track.img;
-    trackName.innerText = track.name;
-    trackAuthor.innerText = track.author;
+function changeTrack(direction) {
+    currentTrackIndex += direction;
+    if (currentTrackIndex >= tracks.length) currentTrackIndex = 0;
+    if (currentTrackIndex < 0) currentTrackIndex = tracks.length - 1;
+    
+    const widget = document.getElementById('spotify-widget');
+    const newId = tracks[currentTrackIndex];
+    widget.src = `https://open.spotify.com/embed/track/${newId}?utm_source=generator&theme=0`;
 }
 
-function toggleMusic() {
-    if (isPlaying) {
-        audio.pause();
-        playBtn.innerText = '▶';
-        discImg.style.animationPlayState = 'paused';
-    } else {
-        audio.play().catch(e => console.log("Kliknij na stronę najpierw"));
-        playBtn.innerText = '⏸';
-        discImg.style.animationPlayState = 'running';
-    }
-    isPlaying = !isPlaying;
-}
-
-function nextTrack() {
-    currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
-    loadTrack(currentTrackIndex);
-    if (isPlaying) audio.play();
-}
-
-function prevTrack() {
-    currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
-    loadTrack(currentTrackIndex);
-    if (isPlaying) audio.play();
-}
-
-audio.onended = nextTrack;
-loadTrack(currentTrackIndex);
-
-// --- NAWIGACJA ---
-function showSection(sectionId) {
+function showSection(id) {
     document.querySelectorAll('.content-view').forEach(v => v.style.display = 'none');
-    document.getElementById(sectionId + '-section').style.display = 'block';
-    if(document.getElementById('ranking-view')) document.getElementById('ranking-view').style.display = 'none';
+    document.getElementById(id + '-section').style.display = 'block';
+    if(id === 'categories') document.getElementById('ranking-view').style.display = 'none';
     
     document.querySelectorAll('.nav-links li').forEach(li => li.classList.remove('active'));
-    document.getElementById('nav-' + sectionId).classList.add('active');
+    document.getElementById('nav-' + id).classList.add('active');
 }
 
-async function loadCategory(fileName) {
-    try {
-        const response = await fetch(`data/${fileName}.json`);
-        const data = await response.json();
-        const rv = document.getElementById('ranking-view');
-        document.getElementById('categories-section').style.display = 'none';
-        rv.style.display = 'block';
+async function loadCategory(name) {
+    const rv = document.getElementById('ranking-view');
+    document.getElementById('categories-section').style.display = 'none';
+    rv.style.display = 'block';
+    
+    // Placeholder loading state
+    rv.innerHTML = `
+        <button onclick="showSection('categories')" class="add-run-btn" style="width:120px; margin-bottom:20px;">← Back</button>
+        <h1>${name.replace('-', ' ').toUpperCase()} Leaderboard</h1>
+        <p>Loading world records...</p>
+    `;
 
+    try {
+        const response = await fetch(`data/${name}.json`);
+        const data = await response.json();
         const sorted = data.runs.sort((a, b) => a.time.localeCompare(b.time));
-        let html = `<button onclick="goBack()" class="action-btn">← Back</button><h1>${data.categoryName}</h1>`;
+        
+        let html = `<button onclick="showSection('categories')" class="add-run-btn" style="width:120px; margin-bottom:20px;">← Back</button>
+                    <h1>${data.categoryName}</h1>`;
         
         sorted.forEach((run, i) => {
             const rank = i + 1;
@@ -92,18 +52,15 @@ async function loadCategory(fileName) {
             html += `
                 <div class="rank-row" style="display:flex; align-items:center; background:#1c2128; padding:15px; margin-top:10px; border-radius:8px; border-left: 4px solid ${rank <= 3 ? '#7ca352' : 'transparent'}">
                     <span style="width:40px; font-weight:bold;">${medal}</span>
-                    <img src="https://mc-heads.net/avatar/${run.name}/32" style="margin-right:15px;">
+                    <img src="https://mc-heads.net/avatar/${run.name}/32" style="margin-right:15px; border-radius:4px;">
                     <strong style="flex-grow:1;">${run.name}</strong>
-                    <span style="color:#58a6ff;">${run.time}</span>
+                    <span style="color:#58a6ff; font-weight:bold;">${run.time}</span>
                 </div>`;
         });
         rv.innerHTML = html;
-    } catch (e) { console.error(e); }
-}
-
-function goBack() {
-    document.getElementById('ranking-view').style.display = 'none';
-    document.getElementById('categories-section').style.display = 'block';
+    } catch (e) {
+        rv.innerHTML += `<p style="color:red;">Error loading leaderboard data.</p>`;
+    }
 }
 
 function openModal() { document.getElementById('addModal').style.display = 'flex'; }
