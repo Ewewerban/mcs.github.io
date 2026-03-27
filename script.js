@@ -1,4 +1,4 @@
-// --- MUSIC PLAYER LOGIC ---
+// --- 1. PLAYLISTA (Stabilne linki MP3) ---
 const playlist = [
     { 
         name: "Pigstep", 
@@ -10,7 +10,7 @@ const playlist = [
         name: "Otherside", 
         author: "Lena Raine", 
         file: "https://vgmtreasurechest.com/soundtracks/minecraft-otherside/otherside.mp3", 
-        img: "https://minecraft.wiki/images/Music_Disc_Otherside_JE2_BE2.png" 
+        img: "https://minecraft.wiki/w/Music_Disc_otherside#/media/File:Music_Disc_otherside_JE1_BE1.png" 
     },
     { 
         name: "5", 
@@ -28,6 +28,8 @@ const discImg = document.getElementById('disc-img');
 const playBtn = document.getElementById('play-btn');
 const trackNameDisplay = document.querySelector('.track-name');
 const trackAuthorDisplay = document.querySelector('.track-author');
+
+// --- 2. FUNKCJE ODTWARZACZA ---
 
 function loadTrack(index) {
     const track = playlist[index];
@@ -47,13 +49,14 @@ function toggleMusic() {
         if (discImg) discImg.style.animationPlayState = 'paused';
         isPlaying = false;
     } else {
+        // Próba odtworzenia z obsługą blokady przeglądarki
         audio.play().then(() => {
             playBtn.innerText = '⏸';
             if (discImg) discImg.style.animationPlayState = 'running';
             isPlaying = true;
         }).catch(error => {
-            console.log("Autoplay blocked. Click the page first.");
-            playBtn.innerText = '▶';
+            console.log("Blokada autoplay. Kliknij coś na stronie najpierw.");
+            // Nie zmieniamy ikony, czekamy na interakcję
         });
     }
 }
@@ -70,27 +73,38 @@ function prevTrack() {
     if (isPlaying) audio.play().catch(() => {});
 }
 
-// --- NAVIGATION & SIDEBAR LOGIC (Tego brakowało!) ---
+// --- 3. LOGIKA STRONY I KATEGORII (Tego brakowało!) ---
 
 function showSection(id) {
-    // Ukrywa wszystkie widoki
+    // Ukryj wszystkie sekcje
     document.querySelectorAll('.content-view').forEach(v => v.style.display = 'none');
     
-    // Pokazuje wybrany widok
+    // Pokaż wybraną sekcję
     const target = document.getElementById(id + '-section');
     if (target) target.style.display = 'block';
     
-    // Jeśli wracamy do kategorii, ukrywamy widok rankingu
+    // Ukryj widok rankingu jeśli wracamy do wyboru kategorii
     if(id === 'categories') {
         const rv = document.getElementById('ranking-view');
         if (rv) rv.style.display = 'none';
     }
 
-    // Aktualizacja aktywnej klasy w menu
+    // Zmień aktywny przycisk w menu
     document.querySelectorAll('.nav-links li').forEach(li => li.classList.remove('active'));
     const activeNav = document.getElementById('nav-' + id);
     if (activeNav) activeNav.classList.add('active');
 }
 
-// Inicjalizacja
-loadTrack(currentTrackIndex);
+async function loadCategory(name) {
+    const rv = document.getElementById('ranking-view');
+    const catSection = document.getElementById('categories-section');
+    
+    if (catSection) catSection.style.display = 'none';
+    if (rv) {
+        rv.style.display = 'block';
+        rv.innerHTML = `<button onclick="showSection('categories')" class="add-run-btn" style="width:100px; margin-bottom:20px;">← Back</button><h1>Loading...</h1>`;
+    }
+
+    try {
+        // Upewnij się, że pliki .json są w folderze /data/
+        const response = await
