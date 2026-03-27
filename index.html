@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MC Speedruns Leaderboard</title>
     <link rel="stylesheet" href="style.css">
+    <meta name="referrer" content="no-referrer">
 </head>
 <body>
 
@@ -30,42 +31,31 @@
 
         <div id="discord-section" class="content-view" style="display: none;">
             <h1>Join Our Community</h1>
-            <div style="display: flex; justify-content: center; margin-top: 30px; background: #23272a; padding: 20px; border-radius: 15px;">
-                <iframe 
-                    src="https://discord.com/widget?id=1481700436003127309&theme=dark" 
-                    width="350" 
-                    height="500" 
-                    allowtransparency="true" 
-                    frameborder="0" 
-                    sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
-                </iframe>
+            <div class="discord-container">
+                <iframe src="https://discord.com/widget?id=1481700436003127309&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
             </div>
         </div>
 
         <div id="ranking-view" class="content-view" style="display: none;"></div>
     </main>
 
-    <div class="music-player">
-        <img src="https://minecraft.wiki/images/Music_Disc_Pigstep_JE1_BE1.png" alt="Disc" class="disc-art" id="disc-img">
-        <div class="track-info">
-            <div class="track-name">Pigstep</div>
-            <div class="track-author">Lena Raine</div>
+    <div class="spotify-player-container">
+        <iframe id="spotify-widget" 
+            src="https://open.spotify.com/embed/track/1q9696vI396906uS9Y0Y67?utm_source=generator&theme=0" 
+            width="100%" height="80" frameBorder="0" allowfullscreen="" 
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
+        </iframe>
+        <div class="spotify-nav">
+            <button onclick="changeTrack(-1)">⏮ Previous</button>
+            <button onclick="changeTrack(1)">Next ⏭</button>
         </div>
-        <div class="player-controls">
-            <button onclick="prevTrack()" class="nav-btn">⏮</button>
-            <button onclick="toggleMusic()" id="play-btn" class="main-btn">▶</button>
-            <button onclick="nextTrack()" class="nav-btn">⏭</button>
-        </div>
-        <audio id="bg-music" loop>
-            <source src="music/pigstep.mp3" type="audio/mpeg">
-        </audio>
     </div>
 
     <div id="addModal" class="modal" style="display:none;">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <h2 style="color: #7ca352;">Submit Run</h2>
-            <p>Send your proof to: <strong>ewewerban@gmail.com</strong></p>
+            <h2 style="color: #7ca352;">Submit Your Run</h2>
+            <p>Send your proof (video link) to: <br><strong>ewewerban@gmail.com</strong></p>
             <button onclick="closeModal()" class="action-btn">Close</button>
         </div>
     </div>
