@@ -2,22 +2,24 @@ const playlist = [
     { 
         name: "Pigstep", 
         author: "Lena Raine", 
-        file: "https://minecraft.wiki/images/Music_Disc_Pigstep.ogg", 
+        // To jest bezpośredni link do czystego pliku audio
+        file: "https://minecraft.wiki/images/Music_Disc_Pigstep.ogg?20200417210419", 
         img: "https://minecraft.wiki/images/Music_Disc_Pigstep_JE1_BE1.png" 
     },
     { 
         name: "Otherside", 
         author: "Lena Raine", 
-        file: "https://minecraft.wiki/images/Music_Disc_Otherside.ogg", 
+        file: "https://minecraft.wiki/images/Music_Disc_Otherside.ogg?20211020173000", 
         img: "https://minecraft.wiki/images/Music_Disc_Otherside_JE2_BE2.png" 
     },
     { 
         name: "5", 
         author: "Samuel Åberg", 
-        file: "https://minecraft.wiki/images/Music_Disc_5.ogg", 
+        file: "https://minecraft.wiki/images/Music_Disc_5.ogg?20220519170000", 
         img: "https://minecraft.wiki/images/Music_Disc_5_JE1_BE1.png" 
     }
 ];
+
 
 let currentTrackIndex = 0;
 let isPlaying = false;
